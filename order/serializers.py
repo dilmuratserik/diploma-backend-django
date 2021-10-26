@@ -1,11 +1,10 @@
 from rest_framework import serializers
 from .models import *
 from users.serializers import contgentSer
-class ProductSer(serializers.Serializer):
-    code = serializers.CharField()
+from product.serializers import productSer2
 
 class OrderSer(serializers.ModelSerializer):
-    products = ProductSer(many=True)
+    products = productSer2(many=True)
     counterparty = contgentSer()
     class Meta:
         model = Order

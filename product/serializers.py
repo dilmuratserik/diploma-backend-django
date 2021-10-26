@@ -25,3 +25,9 @@ class ProductGetSer(serializers.Serializer):
 
 class getProductSer(serializers.Serializer):
     data = serializers.ListField()
+
+
+class productSer2(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = "__all__"
