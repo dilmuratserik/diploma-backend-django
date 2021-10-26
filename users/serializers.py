@@ -100,4 +100,4 @@ class CourierUserSerializer(serializers.ModelSerializer):
 class contgentSer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('name', 'role', 'bin_iin')
+        fields = ('name', 'role', 'bin_iin', 'phone')
