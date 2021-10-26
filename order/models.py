@@ -19,9 +19,10 @@ class Order(models.Model):
     outlet = models.ForeignKey("locations.Outlets", on_delete=models.CASCADE,null=True, blank=True)
     type_order = models.SmallIntegerField(choices=TYPE_ORDER, blank=True, null=True)
     status = models.SmallIntegerField(choices=TYPE_STATUS, blank=True, null=True, default = 1)
-    courier = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True)
+    courier = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True, related_name='courier')
     delivered_date = models.DateField(null=True, blank=True, auto_now=False, auto_now_add=False)
     products = models.ManyToManyField("product.Product")
+    counterparty = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True, related_name='conterparty')
 
     def __str__(self):
         return f'{self.id}, {self.outlet.name}'

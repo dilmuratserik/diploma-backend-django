@@ -95,3 +95,9 @@ class CourierUserSerializer(serializers.ModelSerializer):
         instance.storage = validated_data.get('storage', instance.storage)
         instance.save()
         return instance
+
+
+class contgentSer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('name', 'role', 'bin_iin')
