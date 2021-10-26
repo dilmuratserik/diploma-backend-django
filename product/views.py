@@ -35,7 +35,7 @@ class GetProduct(APIView):
     permission_classes = [permissions.AllowAny,]
 
     def post(self, request):
-        s = ProductGetSer(data=request.data)
+        s = getProductSer(data=request.data)
         if s.is_valid():
             print(s.validated_data.get('data', None))
             return Response({'status': 'ok'})
@@ -46,10 +46,10 @@ class GetProduct(APIView):
 class GetProductCode(APIView):
     permission_classes = [permissions.AllowAny,]
 
-    def post(self, request):
+    def post(self, request, code):
         s = ProductGetSer(data=request.data)
         if s.is_valid():
-            p = Product.objects.filter(code = s.validated_data['code'])
+            p = Product.objects.filter(code = code)
             if p.exists():
                 p = p[0]
                 price = s.validated_data.get('price', None)

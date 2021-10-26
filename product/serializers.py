@@ -17,7 +17,6 @@ class productSer(serializers.ModelSerializer):
 
 
 class ProductGetSer(serializers.Serializer):
-    code = serializers.CharField()
     name = serializers.CharField(required=False)
     unit = serializers.IntegerField(required=False)
     price = serializers.IntegerField(required=False)
