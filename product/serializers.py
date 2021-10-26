@@ -14,3 +14,15 @@ class productSer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = "__all__"
+
+
+class ProductGetSer(serializers.Serializer):
+    code = serializers.CharField()
+    name = serializers.CharField(required=False)
+    unit = serializers.IntegerField(required=False)
+    price = serializers.IntegerField(required=False)
+    articul = serializers.CharField(required=False)
+
+
+class getProductSer(serializers.Serializer):
+    data = serializers.ListField()

@@ -6,12 +6,28 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 
 class Product(models.Model):
+    STATUS_STOCK = 1
+    STATUS_NOT_AVAILABLE = 2
+    STATUS_SOON = 3
+    STATUS_NOT_SALE = 4
+    STATUS_CHOICES = (
+        (STATUS_STOCK, 'в наличии'),
+        (STATUS_NOT_AVAILABLE, 'нет в наличии'),
+        (STATUS_SOON, 'скоро будет'),
+        (STATUS_NOT_SALE, 'не продается больше')
+    )
     name = models.CharField(max_length=100)
     description = models.TextField()
-    category = models.ForeignKey("category.Category", on_delete=models.CASCADE)
-    subcategory = models.ForeignKey("category.SubCategory", on_delete=models.CASCADE)
-    price = models.IntegerField()
-    weight = models.IntegerField()
+    category = models.ForeignKey("category.Category", on_delete=models.CASCADE, blank=True, null=True)
+    subcategory = models.ForeignKey("category.SubCategory", on_delete=models.CASCADE, blank=True, null=True)
+    price = models.IntegerField(blank=True, null=True)
+    weight = models.IntegerField(blank=True, null=True)
+    code = models.CharField(max_length=100, blank=True, null=True)
+    articul = models.CharField(max_length=100, blank=True, null=True)
+    status = models.SmallIntegerField(choices=STATUS_CHOICES, default = 1)
+    count = models.BigIntegerField(default = 0)
+    uuid = models.CharField(max_length=150, blank=True, null=True)
+    unit = models.SmallIntegerField(default = 1)
 
     def __str__(self):
         return self.name

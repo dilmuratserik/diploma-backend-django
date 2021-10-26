@@ -4,5 +4,5 @@ from rest_framework.routers import DefaultRouter
 
 
 urlpatterns = [
-    
+    path('', views.OrderApi.as_view())
 ]

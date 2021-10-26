@@ -144,7 +144,7 @@ class Logined(APIView):
                         token = Token.objects.get(user=us)
                     else:
                         token = Token.objects.create(user=us)
-                    return Response({'key': token.key, 'uid': us.id, 'status': 'ok'})
+                    return Response({'key': token.key, 'uid': us.id, 'status': 'ok', 'role': us.role})
                 else:
                     return Response({'status': 'error'})
             else:
