@@ -10,7 +10,7 @@ class productser(serializers.Serializer):
     articul = serializers.CharField()
 
 class OrderSer(serializers.ModelSerializer):
-    products = productSer(many=True)
+    products = productser(many=True)
     counterparty = contgentSer()
     class Meta:
         model = Order
