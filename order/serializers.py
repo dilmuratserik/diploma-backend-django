@@ -9,9 +9,15 @@ class productser(serializers.Serializer):
     code = serializers.CharField()
     articul = serializers.CharField()
 
+class OrderProductSer(serializers.ModelSerializer):
+    product = productser()
+    class Meta:
+        model = OrderProduct
+        fields = "__all__"
+
 class OrderSer(serializers.ModelSerializer):
-    products = productser(many=True)
+    product_order = OrderProductSer(many=True)
     counterparty = contgentSer()
     class Meta:
         model = Order
-        fields = ('date', 'products', 'counterparty', 'status', 'outlet', 'type_order', 'products_count')
+        fields = "__all__"

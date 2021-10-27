@@ -21,13 +21,12 @@ class Order(models.Model):
     status = models.SmallIntegerField(choices=TYPE_STATUS, blank=True, null=True, default = 1)
     courier = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True, related_name='courier')
     delivered_date = models.DateField(null=True, blank=True, auto_now=False, auto_now_add=False)
-    products = models.ManyToManyField("product.Product")
     counterparty = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True, related_name='conterparty')
 
     def __str__(self):
         return f'{self.id}, {self.outlet.name}'
 
-    def products_count(self):
-        return len(self.products.all())
-    
-
+class OrderProduct(models.Model):
+    product = models.ForeignKey('product.Product', on_delete=models.CASCADE, related_name='order_product')
+    count = models.BigIntegerField()
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True, related_name="product_order")
