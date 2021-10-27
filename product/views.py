@@ -38,6 +38,19 @@ class GetProduct(APIView):
         s = getProductSer(data=request.data)
         if s.is_valid():
             print(s.validated_data.get('data', None))
+            data = s.validated_data.get('data', None)
+            for i in data:
+                p = Product.objects.filter(code = i['code'])
+                if p.exists():
+                    print(i['code'])
+                else:
+                    Product.objects.create(
+                        code = i['code'],
+                        name = i['name'],
+                        price = i['price'],
+                        articul = i['articul']
+                    )
+                
             return Response({'status': 'ok'})
         else:
             return Response(s.errors)

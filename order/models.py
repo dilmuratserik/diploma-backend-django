@@ -26,5 +26,8 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.id}, {self.outlet.name}'
+
+    def products_count(self):
+        return len(self.products.all())
     
 

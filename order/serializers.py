@@ -14,4 +14,4 @@ class OrderSer(serializers.ModelSerializer):
     counterparty = contgentSer()
     class Meta:
         model = Order
-        fields = "__all__"
+        fields = ('date', 'products', 'counterparty', 'status', 'outlet', 'type_order', 'products_count')
