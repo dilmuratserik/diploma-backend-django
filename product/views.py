@@ -51,6 +51,8 @@ class GetProduct(APIView):
                         name = i['name'],
                         price = i['price']
                     )
+                    if 'uuid' in i:
+                        p.uuid = i['uuid']
                     if 'description' in i:
                         p.description = i['description']
                     if 'articul' in i:
