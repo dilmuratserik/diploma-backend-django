@@ -41,7 +41,7 @@ class GetProduct(APIView):
             print(s.validated_data.get('data', None))
             data = s.validated_data.get('data', None)
             for i in data:
-                i = ast.literal_eval(i)
+                i = eval(i)
                 p = Product.objects.filter(code = i['code'])
                 if p.exists():
                     print(i['code'])
