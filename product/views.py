@@ -46,12 +46,13 @@ class GetProduct(APIView):
                 if p.exists():
                     print(i['code'])
                 else:
-                    
                     p = Product.objects.create(
                         code = i['code'],
                         name = i['name'],
                         price = i['price']
                     )
+                    if 'description' in i:
+                        p.description = i['description']
                     if 'articul' in i:
                         p.articul = i['articul']
                     if 'unit' in i:
