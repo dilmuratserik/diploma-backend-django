@@ -40,11 +40,13 @@ class GetProduct(APIView):
             print(s.validated_data.get('data', None))
             data = s.validated_data.get('data', None)
             for i in data:
+                print('iii', type(i))
                 # i = eval(i)
                 p = Product.objects.filter(code = i['code'])
                 if p.exists():
                     print(i['code'])
                 else:
+                    
                     p = Product.objects.create(
                         code = i['code'],
                         name = i['name'],
