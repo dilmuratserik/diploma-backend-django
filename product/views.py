@@ -38,7 +38,7 @@ class GetProduct(APIView):
         s = getProductSer(data=request.data)
         if s.is_valid():
             print(s.validated_data.get('data', None))
-            print(json.loads(s.validated_data['data']))
+            print(json.loads(s.validated_data['data'][0]))
             data = s.validated_data.get('data', None)
             for i in data:
                 p = Product.objects.filter(code = i['code'])
