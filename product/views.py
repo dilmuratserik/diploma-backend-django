@@ -30,7 +30,6 @@ class getProduct(viewsets.ModelViewSet):
             return self.queryset.filter(price__gte=minheight, price__lte=maxheight)
         return self.queryset
 
-import ast
 class GetProduct(APIView):
     permission_classes = [permissions.AllowAny,]
 
@@ -41,7 +40,7 @@ class GetProduct(APIView):
             print(s.validated_data.get('data', None))
             data = s.validated_data.get('data', None)
             for i in data:
-                i = eval(i)
+                # i = eval(i)
                 p = Product.objects.filter(code = i['code'])
                 if p.exists():
                     print(i['code'])
