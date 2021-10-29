@@ -30,17 +30,18 @@ class getProduct(viewsets.ModelViewSet):
             return self.queryset.filter(price__gte=minheight, price__lte=maxheight)
         return self.queryset
 
-import json
+import ast
 class GetProduct(APIView):
     permission_classes = [permissions.AllowAny,]
 
     def post(self, request):
         s = getProductSer(data=request.data)
         if s.is_valid():
+            # print(dict(s.validated_data.get('data', None)[0]))
             print(s.validated_data.get('data', None))
-            print(json.loads(s.validated_data['data'][0]))
             data = s.validated_data.get('data', None)
             for i in data:
+                i = ast.literal_eval(i)
                 p = Product.objects.filter(code = i['code'])
                 if p.exists():
                     print(i['code'])
