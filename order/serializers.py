@@ -21,3 +21,9 @@ class OrderSer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = "__all__"
+
+
+class orderSer(serializers.Serializer):
+    name = serializers.CharField()
+    phone = serializers.CharField()
+    products = serializers.ListField()

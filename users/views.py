@@ -46,14 +46,14 @@ class PhoneCode(APIView):
             if PhoneOTP.objects.filter(phone = phone).exists():
                 a = PhoneOTP.objects.get(phone = phone)
                 # a.nickname = nickname
-                if phone == "+77783579279":
+                if phone == "77783579279":
                     a.otp = "1111"
                 else:
                     a.otp = rand
                 # a.otp = "1111"
                 a.save()
             else:
-                if phone == "+77783579279":
+                if phone == "77783579279":
                     PhoneOTP.objects.create(phone=phone, otp="1111")
                 else:
                     PhoneOTP.objects.create(phone=phone, otp=str(rand))
