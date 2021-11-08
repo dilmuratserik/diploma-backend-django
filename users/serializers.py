@@ -25,8 +25,8 @@ class AvatarSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("avatar", "name", 'location', 'bin_iin', 'role')
-        required_fields = ("avatar", "name", 'location', 'bin_iin', 'role')
+        fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
+        required_fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
 
     def update(self, instance, validated_data):
         instance.avatar = validated_data.get('avatar', instance.avatar)
