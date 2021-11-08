@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 import random
 from .serializers import *
-from .models import Address
+from .models import *
 from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework.decorators import permission_classes
@@ -32,3 +32,19 @@ class AddressView(APIView):
             return Response({'status': 'success'})
         else:
             return Response({'status': 'error'})
+
+
+class CountryApi(APIView):
+    permission_classes = [permissions.AllowAny,]
+
+    def get(self, request):
+        queryset = Country.objects.values('id', 'name').all()
+        return Response(queryset)
+
+
+class CityApi(APIView):
+    permission_classes = [permissions.AllowAny,]
+
+    def get(self, request):
+        queryset = City.objects.values('id', 'name', 'country').all()
+        return Response(queryset)
