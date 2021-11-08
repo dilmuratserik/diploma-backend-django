@@ -14,7 +14,7 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {"fields": ('phone', 'password'),}),
         ("Personal info", {"fields": ('role', 'name', 'email','avatar', 
-                        'birth_date', 'location', 'last_online', 'bin_iin',
+                        'birth_date', 'country', 'city','location', 'last_online', 'bin_iin',
                         'type_price', 'storage', 'order_sector')}),
         ("Permissions", {"fields": ('is_moder', 'is_staff', 'is_active')})
     )

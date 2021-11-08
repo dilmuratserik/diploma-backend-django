@@ -21,12 +21,14 @@ class RegisterSerializer(serializers.Serializer):
 class AvatarSerializer(serializers.Serializer):
     avatar = serializers.CharField()
 
-
+class CountrySer(serializers.Serializer):
+    name = serializers.CharField()
+    id = serializers.IntegerField()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
-        required_fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
+        fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city')
+        # required_fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
 
     def update(self, instance, validated_data):
         instance.avatar = validated_data.get('avatar', instance.avatar)

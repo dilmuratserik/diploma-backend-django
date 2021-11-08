@@ -139,6 +139,12 @@ class User(AbstractBaseUser, PermissionsMixin):
                                             sys.getsizeof(output), None)
             super(User, self).save()
 
+    def locations(self):
+        if self.country:
+            return self.country.name + ', ' + self.city.name
+        else:
+            return ""
+
 
 
 class PhoneOTP(models.Model):
