@@ -89,9 +89,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     birth_date = models.DateField(null=True, blank=True, auto_now=False, auto_now_add=False)
     bin_iin = models.CharField(max_length=50, blank=True, null=True)
     # ------------------------------------------------------
-    # country = models.ForeignKey("locations.Country", on_delete=models.CASCADE, blank=True, null=True)
+    country = models.ForeignKey("locations.Country", on_delete=models.CASCADE, blank=True, null=True)
     # region = models.ForeignKey("locations.Region", on_delete=models.CASCADE, blank=True, null=True)
-    # city = models.ForeignKey("locations.City", on_delete=models.CASCADE, blank=True, null=True)
+    city = models.ForeignKey("locations.City", on_delete=models.CASCADE, blank=True, null=True)
     location = models.ForeignKey("locations.Location", on_delete=models.CASCADE, blank=True, null=True)
     # -------------------------------------------------------
     role = models.SmallIntegerField(choices=ROLE_CHOICES, blank=True, null=True)
