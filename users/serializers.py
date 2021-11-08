@@ -34,6 +34,9 @@ class UserSerializer(serializers.ModelSerializer):
         instance.country = validated_data.get('country', instance.country)
         instance.city = validated_data.get('city', instance.city)
         instance.bin_iin = validated_data.get('bin_iin', instance.bin_iin)
+        instance.location = validated_data.get('location', instance.location)
+        instance.role = validated_data.get('role', instance.role)
+        instance.phone = validated_data.get('phone', instance.phone)
         instance.save()
         return instance
 
