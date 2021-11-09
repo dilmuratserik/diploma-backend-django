@@ -25,6 +25,7 @@ class CountrySer(serializers.Serializer):
     name = serializers.CharField()
     id = serializers.IntegerField()
 class UserSerializer(serializers.ModelSerializer):
+    phone = serializers.CharField(required=False)
     class Meta:
         model = User
         fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city')
