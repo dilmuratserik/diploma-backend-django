@@ -29,7 +29,7 @@ class AddressView(APIView):
                 entrance = s.validated_data['entrance'],
                 user = request.user
             )
-            return Response({'status': 'success'})
+            return Response({'status': 'ok'})
         else:
             return Response({'status': 'error'})
 

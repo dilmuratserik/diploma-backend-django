@@ -23,7 +23,9 @@ class OrderSer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class orderSer(serializers.Serializer):
-    name = serializers.CharField()
-    phone = serializers.CharField()
+class orderCreateSer(serializers.Serializer):
+    courier = serializers.IntegerField(required=False)
+    outlet = serializers.IntegerField()
     products = serializers.ListField()
+    type_order = serializers.IntegerField(required=False)
+    counterparty = serializers.IntegerField()
