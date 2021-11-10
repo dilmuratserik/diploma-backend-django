@@ -86,7 +86,7 @@ class GetProductCode(APIView):
                 if articule:
                     p.articul = articule
                 p.save()
-                return Response({'status': 'success'})
+                return Response({'status': 'ok'})
             else:
                 return Response({'status': 'not found'})
         else:
