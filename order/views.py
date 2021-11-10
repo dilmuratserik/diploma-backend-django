@@ -4,7 +4,7 @@ import random
 from product.models import Product
 from .serializers import *
 from .models import *
-from models import Country, City, Outlets
+from locations.models import Country, City, Outlets
 from users.models import User
 from rest_framework.response import Response
 from rest_framework import permissions
