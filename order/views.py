@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 import random
-
-from galleon.product.models import Product
+from product.models import Product
 from .serializers import *
 from .models import *
-from locations.models import Country, City, Outlets
+from models import Country, City, Outlets
 from users.models import User
 from rest_framework.response import Response
 from rest_framework import permissions
