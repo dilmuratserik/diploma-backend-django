@@ -43,9 +43,9 @@ class Location(models.Model):
 class Address(models.Model):
     street = models.CharField(max_length=150)
     house = models.CharField(max_length=50)
-    apartment = models.CharField(max_length=50)
-    floor = models.IntegerField()
-    entrance = models.IntegerField()
+    apartment = models.CharField(max_length=50, null=True, blank=True)
+    floor = models.IntegerField(null=True, blank=True)
+    entrance = models.IntegerField(null=True, blank=True)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="my_address") 
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     lng = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)

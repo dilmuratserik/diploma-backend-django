@@ -27,3 +27,6 @@ class AddressSer(serializers.ModelSerializer):
         model = Address
         fields = "__all__"
         read_only_fields = ('user',)
+
+class IdSer(serializers.Serializer):
+    id = serializers.IntegerField()
