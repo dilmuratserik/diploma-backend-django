@@ -33,7 +33,15 @@ class Order(models.Model):
     def __str__(self):
         return f'{self.id}'
 
+
+class Basket(models.Model):
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+
 class OrderProduct(models.Model):
     product = models.ForeignKey('product.Product', on_delete=models.CASCADE, related_name='order_product')
     count = models.BigIntegerField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True, related_name="product_order")
+    # basket = models.ForeignKey(Basket, on_delete=models.CASCADE, null=True, blank=True, related_name="basket_product")
+
+
+

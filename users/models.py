@@ -107,7 +107,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     last_online = models.DateTimeField(null=True, blank=True)
     #--------------------------------------------------------
-    avatar = models.ImageField(upload_to=user_photos_dir, default="default/default.png")
+    avatar = models.ImageField(upload_to=user_photos_dir, default="default/default.jpg")
     # favorites = models.ManyToManyField("products.Product", related_name="favs", blank=True)
     # basket = models.ManyToManyField("products.Product", related_name="basket", blank=True)
     # -------------------------------------------------------
@@ -118,26 +118,26 @@ class User(AbstractBaseUser, PermissionsMixin):
         return str(self.id) + ", " + self.phone
 
     
-    def save(self, *args, **kwargs):
-        # Opening the uploaded image
-        print(self.avatar.name.split('.')[0])
-        if self.avatar and self.avatar.name.split('.')[0] != 'default/default.png':
-            im = Image.open(self.avatar)
-            output = BytesIO()
-            # Resize/modify the image
-            width, height = im.size
-            if width > 1000:
-                im = im.resize((width-200, height-200))
+    # def save(self, *args, **kwargs):
+    #     # Opening the uploaded image
+    #     print(self.avatar.name.split('.')[0])
+    #     if self.avatar and self.avatar.name.split('.')[0] != 'default/default.png':
+    #         im = Image.open(self.avatar)
+    #         output = BytesIO()
+    #         # Resize/modify the image
+    #         width, height = im.size
+    #         if width > 1000:
+    #             im = im.resize((width-200, height-200))
 
-            # after modifications, save it to the output
-            im.save(output, format='JPEG', quality=90)
-            output.seek(0)
+    #         # after modifications, save it to the output
+    #         im.save(output, format='JPEG', quality=90)
+    #         output.seek(0)
 
-            # # change the imagefield value to be the newley modifed image value
-            # print(self.avatar.name.split('.')[0])
-            self.avatar = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.avatar.name.split('.')[0], 'image/jpeg',
-                                            sys.getsizeof(output), None)
-            super(User, self).save()
+    #         # # change the imagefield value to be the newley modifed image value
+    #         # print(self.avatar.name.split('.')[0])
+    #         self.avatar = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.avatar.name.split('.')[0], 'image/jpeg',
+    #                                         sys.getsizeof(output), None)
+    #         super(User, self).save()
 
     def locations(self):
         if self.country:

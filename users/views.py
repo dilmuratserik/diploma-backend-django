@@ -153,6 +153,7 @@ class Logined(APIView):
             return Response(s.errors)
 
 
+from utils.compress import compress_image
 class Avatar(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -160,6 +161,7 @@ class Avatar(APIView):
         s = AvatarSerializer(data=request.data)
         if s.is_valid():
             ava = s.validated_data['avatar']
+            ava = compress_image(ava, (400, 400))
             request.user.avatar = ava
             request.user.save()
             return Response({'status': "ok", "avatar": request.user.avatar.url})

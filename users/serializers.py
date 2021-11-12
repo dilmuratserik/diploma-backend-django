@@ -24,6 +24,7 @@ class AvatarSerializer(serializers.Serializer):
 class CountrySer(serializers.Serializer):
     name = serializers.CharField()
     id = serializers.IntegerField()
+    
 class UserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
     class Meta:
@@ -32,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
         # required_fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
 
     def update(self, instance, validated_data):
-        instance.avatar = validated_data.get('avatar', instance.avatar)
+        # instance.avatar = validated_data.get('avatar', instance.avatar)
         instance.name = validated_data.get('name', instance.name)
         instance.country = validated_data.get('country', instance.country)
         instance.city = validated_data.get('city', instance.city)

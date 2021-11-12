@@ -1,3 +1,4 @@
+from django.db.models import fields
 from rest_framework import serializers
 from .models import *
 from users.serializers import contgentSer
@@ -29,3 +30,13 @@ class orderCreateSer(serializers.Serializer):
     products = serializers.ListField()
     type_order = serializers.IntegerField(required=False)
     counterparty = serializers.IntegerField()
+
+class BasketSer(serializers.Serializer):
+    products = serializers.ListField()
+
+class BasketGetSer(serializers.ModelSerializer):
+    basket_product = OrderProductSer(many=True)
+    class Meta:
+        model = Basket
+        fields = "__all__"
+

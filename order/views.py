@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render
 from rest_framework.views import APIView
 import random
@@ -23,6 +24,31 @@ class OrderApi(APIView):
         o = Order.objects.all()
         s = OrderSer(o, many=True)
         return Response(s.data)
+
+
+class BasketApi(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        queryset = Basket.objects.get(user=request.user)
+        s = BasketGetSer(queryset)
+        return Response(s.data)
+
+    def post(self, request):
+        s = BasketSer(data=request.data)
+        if s.is_valid():
+            b = Basket.objects.create(user=request.user)
+            products = s.validated_data['products']
+            for i in products:
+                OrderProduct.objects.create(
+                    product = Product.objects.get(id=i['id']),
+                    count = i['count'],
+                    basket = b
+                )
+            return Response({'status': 'ok'})
+        else:
+            return Response(s.errors)
+
 
 
 class CreateOrderApi(APIView):
