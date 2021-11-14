@@ -41,26 +41,27 @@ class PhoneCode(APIView):
         s = PhoneS(data=request.data)
         rand = random.randint(1000, 9999)
         if s.is_valid():
-            # nickname = s.validated_data['name']
             phone = s.validated_data['phone']
-            if PhoneOTP.objects.filter(phone = phone).exists():
-                a = PhoneOTP.objects.get(phone = phone)
-                # a.nickname = nickname
-                if phone == "77783579279":
-                    a.otp = "1111"
-                else:
-                    a.otp = rand
-                # a.otp = "1111"
-                a.save()
+            user = User.objects.filter(phone=phone)
+            if user.exists():
+                return Response({'status': 'already exists'})
             else:
-                if phone == "77783579279":
-                    PhoneOTP.objects.create(phone=phone, otp="1111")
+                p = PhoneOTP.objects.filter(phone = phone)
+                if p.exists():
+                    a = p.first()
+                    if phone == "77783579279":
+                        a.otp = "1111"
+                    else:
+                        a.otp = rand
+                    a.save()
                 else:
-                    PhoneOTP.objects.create(phone=phone, otp=str(rand))
-                    # PhoneOTP.objects.create(phone=phone, nickname=nickname, otp=str(1111))
-            # if phone != "+77783579279":
-                # smsc.send_sms(phone, "Код подтверждения для ALU.KZ: "+str(rand), sender="sms")
-            return Response({'status': 'ok'})
+                    if phone == "77783579279":
+                        PhoneOTP.objects.create(phone=phone, otp="1111")
+                    else:
+                        PhoneOTP.objects.create(phone=phone, otp=str(rand))
+                # if phone != "+77783579279":
+                    # smsc.send_sms(phone, "Код подтверждения для ALU.KZ: "+str(rand), sender="sms")
+                return Response({'status': 'ok'})
         else:
             return Response(s.errors)
 

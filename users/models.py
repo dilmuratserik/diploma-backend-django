@@ -111,6 +111,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     # favorites = models.ManyToManyField("products.Product", related_name="favs", blank=True)
     # basket = models.ManyToManyField("products.Product", related_name="basket", blank=True)
     # -------------------------------------------------------
+
+    credit = models.CharField(max_length = 300, null=True, blank=True)
+    paymets = models.IntegerField(default=0)
+    galleon = models.BooleanField(default=True)
+    debt = models.IntegerField(default=0)
+    agent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+
+
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = []
     objects = UserManager()

@@ -78,12 +78,13 @@ class CountryApi(APIView):
 
     def get(self, request):
         queryset = Country.objects.values('id', 'name').all()
-        return Response(queryset)
+        queryset2 = City.objects.values('id', 'name', 'country').all()
+        return Response({'country': queryset, 'city': queryset2})
 
 
-class CityApi(APIView):
-    permission_classes = [permissions.AllowAny,]
+# class CityApi(APIView):
+#     permission_classes = [permissions.AllowAny,]
 
-    def get(self, request):
-        queryset = City.objects.values('id', 'name', 'country').all()
-        return Response(queryset)
+#     def get(self, request):
+#         queryset = City.objects.values('id', 'name', 'country').all()
+#         return Response(queryset)

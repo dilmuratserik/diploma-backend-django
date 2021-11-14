@@ -11,13 +11,14 @@ class CategoryApi(APIView):
 
     def get(self, request):
         queryset = Category.objects.values('id', 'name').all()
-        return Response(queryset)
+        queryset2 = SubCategory.objects.values('id', 'name', 'category').all()
+        return Response({'category': queryset, 'subcategry': queryset2})
 
 
-class SubCategoryApi(APIView):
-    permission_classes = (permissions.AllowAny,)
+# class SubCategoryApi(APIView):
+#     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request):
-        queryset = SubCategory.objects.values('id', 'name', 'category').all()
-        return Response(queryset)
+#     def get(self, request):
+#         queryset = SubCategory.objects.values('id', 'name', 'category').all()
+#         return Response(queryset)
 
