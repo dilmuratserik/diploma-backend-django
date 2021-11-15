@@ -16,5 +16,6 @@ urlpatterns = [
     path('get/detail/<id>', views.detailUser.as_view()),
     # path('detail', views.detailUser2.as_view()),
     path('password/change/', views.PasswordChangeView.as_view()),
+    path('change/ava/', views.Avatar.as_view())
 ]
 urlpatterns += router.urls

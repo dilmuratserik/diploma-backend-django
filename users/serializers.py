@@ -24,7 +24,8 @@ class AvatarSerializer(serializers.Serializer):
 class CountrySer(serializers.Serializer):
     name = serializers.CharField()
     id = serializers.IntegerField()
-    
+
+from utils.compress import compress_image
 class UserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
     class Meta:
@@ -33,7 +34,10 @@ class UserSerializer(serializers.ModelSerializer):
         # required_fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
 
     def update(self, instance, validated_data):
-        # instance.avatar = validated_data.get('avatar', instance.avatar)
+        ava = validated_data.get('avatar', None)
+        if ava:
+            ava = compress_image(ava, (400, 400))
+            instance.avatar = ava
         instance.name = validated_data.get('name', instance.name)
         instance.country = validated_data.get('country', instance.country)
         instance.city = validated_data.get('city', instance.city)
