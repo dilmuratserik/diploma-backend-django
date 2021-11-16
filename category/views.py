@@ -12,7 +12,7 @@ class CategoryApi(APIView):
     def get(self, request):
         queryset = Category.objects.values('id', 'name').all()
         queryset2 = SubCategory.objects.values('id', 'name', 'category').all()
-        return Response({'category': queryset, 'subcategry': queryset2})
+        return Response({'category': queryset, 'subcategory': queryset2})
 
 
 # class SubCategoryApi(APIView):
