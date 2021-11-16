@@ -39,6 +39,7 @@ class CreateOrderApi(APIView):
     def post(self, request):
         s = orderCreateSer(data=request.data)
         if s.is_valid():
+            print(s.validated_data)
             order = Order.objects.create(
                 type_delivery = s.validated_data.get('type_delivery', 1),
                 # outlet = Outlets.objects.get(s.validated_data['outlet']),
