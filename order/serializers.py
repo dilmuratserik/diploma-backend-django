@@ -26,12 +26,12 @@ class OrderSer(serializers.ModelSerializer):
 
 class orderCreateSer(serializers.Serializer):
     courier = serializers.IntegerField(required=False)
-    outlet = serializers.IntegerField()
+    # outlet = serializers.IntegerField()
     products = serializers.ListField()
     type_order = serializers.IntegerField(required=False)
     counterparty = serializers.IntegerField()
     type_delivery = serializers.IntegerField(required=False)
-    delivered_date = serializers.DateTimeField()
+    delivered_date = serializers.DateTimeField(required=False)
 
 
 
