@@ -26,9 +26,12 @@ class CountrySer(serializers.Serializer):
     id = serializers.IntegerField()
 
 from utils.compress import compress_image
+class StrogeSer(serializers.Serializer):
+    name = serializers.CharField()
 class UserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
     # type_price = serializers.IntegerField(read_only_fields)
+    storage = StrogeSer()
     class Meta:
         model = User
         fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city', 'type_price', 'storage', 'order_sector')
