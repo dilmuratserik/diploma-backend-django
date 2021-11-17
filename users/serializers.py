@@ -28,10 +28,12 @@ class CountrySer(serializers.Serializer):
 from utils.compress import compress_image
 class UserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
+    # type_price = serializers.IntegerField(read_only_fields)
     class Meta:
         model = User
-        fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city')
+        fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city', 'type_price', 'storage', 'order_sector')
         # required_fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
+        readd_only_fields = ('type_price', 'storage', 'order_sector')
 
     def update(self, instance, validated_data):
         ava = validated_data.get('avatar', None)
