@@ -258,6 +258,15 @@ class CourierUserView(viewsets.ModelViewSet):
             return Response(s.errors, status=status.HTTP_409_CONFLICT)
 
 
+class GetPointApi(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        queryset = User.objects.filter(role=2)
+        s = CountrySer(many=True)
+        return Response(s.data)
+
+
 # class pushRegister(APIView):
 #     permission_classes = [permissions.IsAuthenticated]
     

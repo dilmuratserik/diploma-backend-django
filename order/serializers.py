@@ -9,6 +9,7 @@ class productser(serializers.Serializer):
     name = serializers.CharField()
     code = serializers.CharField()
     articul = serializers.CharField()
+    price = serializers.IntegerField()
 
 class OrderProductSer(serializers.ModelSerializer):
     product = productser()
@@ -19,6 +20,7 @@ class OrderProductSer(serializers.ModelSerializer):
 class OrderSer(serializers.ModelSerializer):
     product_order = OrderProductSer(many=True)
     counterparty = contgentSer()
+    # sum = serializers.IntegerField()
     class Meta:
         model = Order
         fields = "__all__"

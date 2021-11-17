@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields import BigIntegerField
 
 class Order(models.Model):
     TYPE_ORDER_ORDER = 1
@@ -31,9 +32,22 @@ class Order(models.Model):
     delivered_date = models.DateField(null=True, blank=True, auto_now=False, auto_now_add=False)
     counterparty = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True, related_name='conterparty')
     type_delivery = models.SmallIntegerField(choices=TYPE_DELIVERY, blank=True, null=True, default = 1)
+    total = models.BigIntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return f'{self.id}'
+
+    def save(self, *args, **kwargs):
+        s = self.product_order.all()
+        summ = 0
+        if len(s) >= 1:
+            for i in s:
+                if i.count:
+                    summ += i.product.price * i.count
+                else:
+                    summ += i.product.price
+        self.total = summ
+        super(Order, self).save(*args, **kwargs)
 
 
 # class Basket(models.Model):
