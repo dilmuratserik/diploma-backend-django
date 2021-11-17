@@ -263,7 +263,7 @@ class GetPointApi(APIView):
 
     def get(self, request):
         queryset = User.objects.filter(role=2)
-        s = CountrySer(many=True)
+        s = CountrySer(queryset, many=True)
         return Response(s.data)
 
 
