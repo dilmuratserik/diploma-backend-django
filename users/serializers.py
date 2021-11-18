@@ -31,7 +31,7 @@ class StrogeSer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
     # type_price = serializers.IntegerField(read_only_fields)
-    storage = StrogeSer()
+    storage = StrogeSer(read_only=True)
     class Meta:
         model = User
         fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city', 'type_price', 'storage', 'order_sector')
