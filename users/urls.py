@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'detail', views.detailUser2, basename='users')
 router.register(r'tp', views.TPUserView, basename='tp')
-router.register(r'courier', views.CourierUserView, basename='courier')
+# router.register(r'courier', views.CourierUserView, basename='courier')
 
 urlpatterns = [
     path('login/', views.Logined.as_view()),

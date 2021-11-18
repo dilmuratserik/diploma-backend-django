@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import User
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.conf import settings
-
+from utils.compress import compress_image
 
 class LoginAdminSerializer(serializers.Serializer):
     phone = serializers.CharField()
@@ -25,7 +25,7 @@ class CountrySer(serializers.Serializer):
     name = serializers.CharField()
     id = serializers.IntegerField()
 
-from utils.compress import compress_image
+
 class StrogeSer(serializers.Serializer):
     name = serializers.CharField()
 class UserSerializer(serializers.ModelSerializer):
@@ -78,40 +78,18 @@ class PasswordChangeSerializer(serializers.Serializer):
 
 
 class TPUserSerializer(serializers.ModelSerializer):
+    storage = StrogeSer()
     class Meta:
         model = User
-        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id')
+        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id', 'password', 'role')
         read_only_fields = ('id',)
-        # required_fields = ("avatar", "name", 'location', 'bin_iin', 'role')
-
-    def update(self, instance, validated_data):
-        instance.avatar = validated_data.get('avatar', instance.avatar)
-        instance.name = validated_data.get('name', instance.name)
-        instance.order_sector = validated_data.get('order_sector', instance.order_sector)
-        instance.type_price = validated_data.get('type_price', instance.type_price)
-        instance.storage = validated_data.get('storage', instance.storage)
-        instance.save()
-        return instance
-
 
 class CourierUserSerializer(serializers.ModelSerializer):
+    phone = serializers.CharField(required=False)
     class Meta:
         model = User
-        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id')
+        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id', 'role', 'password')
         read_only_fields = ('id',)
-        # required_fields = ("avatar", "name", 'location', 'bin_iin', 'role')
-
-    def update(self, instance, validated_data):
-        print(validated_data.get('avatar'), 'None')
-        if validated_data.get('avatar'):
-            instance.avatar = validated_data.get('avatar', instance.avatar)
-        instance.name = validated_data.get('name', instance.name)
-        instance.order_sector = validated_data.get('order_sector', instance.order_sector)
-        instance.type_price = validated_data.get('type_price', instance.type_price)
-        instance.storage = validated_data.get('storage', instance.storage)
-        instance.save()
-        return instance
-
 
 class contgentSer(serializers.ModelSerializer):
     class Meta:

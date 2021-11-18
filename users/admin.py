@@ -7,7 +7,7 @@ from .forms import *
 
 class UserAdmin(BaseUserAdmin):
     form = UserAdminChangeForm
-    add_form = UserAdminCreationForm
+    # add_form = UserAdminCreationForm
 
     list_display = ('id','phone',)
     list_filter = ('role',)

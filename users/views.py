@@ -231,31 +231,41 @@ class login_admin(APIView):
 
 class TPUserView(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
-    queryset = User.objects.filter(role=3)
+    queryset = User.objects.filter(role__in=(3, 4))
     serializer_class = TPUserSerializer
 
     def create(self, request):
-        s = TPUserSerializer(data=request.data)
+        s = CourierUserSerializer(data=request.data)
         if s.is_valid():
             user = User.objects.create(**s.validated_data)
+            user.set_password(s.validated_data['password'])
+            user.save()
             ser = TPUserSerializer(user)
             return Response(ser.data)
         else:
             return Response(s.errors, status=status.HTTP_409_CONFLICT)
-
-class CourierUserView(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticated,)
-    queryset = User.objects.filter(role=4)
-    serializer_class = TPUserSerializer
-
-    def create(self, request):
-        s = TPUserSerializer(data=request.data)
+    
+    def update(self, request, pk=None):
+        s = CourierUserSerializer(data=request.data)
         if s.is_valid():
-            user = User.objects.create(**s.validated_data, role=4)
-            ser = TPUserSerializer(user)
-            return Response(ser.data)
+            instance = User.objects.get(id=pk)
+            validated_data = s.validated_data
+            instance.role = validated_data.get('role', instance.role)
+            ava = validated_data.get('avatar', None)
+            if ava:
+                ava = compress_image(ava, (400, 400))
+                instance.avatar = ava
+            instance.name = validated_data.get('name', instance.name)
+            instance.order_sector = validated_data.get('order_sector', instance.order_sector)
+            instance.type_price = validated_data.get('type_price', instance.type_price)
+            instance.storage = validated_data.get('storage', instance.storage)
+            pwd = s.validated_data.get('password', None)
+            if pwd:
+                instance.set_password = pwd
+            instance.save()
+            return Response({'status': 'ok'})
         else:
-            return Response(s.errors, status=status.HTTP_409_CONFLICT)
+            return Response(s.errors)
 
 
 class GetPointApi(APIView):
