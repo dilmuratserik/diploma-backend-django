@@ -36,7 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city', 'type_price', 'storage', 'order_sector')
         # required_fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
-        readd_only_fields = ('type_price', 'storage', 'order_sector')
+        read_only_fields = ('type_price', 'storage', 'order_sector')
 
     def update(self, instance, validated_data):
         ava = validated_data.get('avatar', None)
