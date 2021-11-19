@@ -295,7 +295,8 @@ class GetPointDetailApi(APIView):
                 name = s.validated_data['name'],
                 bin_iin = s.validated_data['bin_iin'],
                 order_sector = s.validated_data['order_sector'],
-                role = 2
+                role = 2,
+                agent = request.user
             )
             return Response({'status': 'ok'})
         else:
