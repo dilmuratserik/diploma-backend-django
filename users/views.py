@@ -287,6 +287,19 @@ class GetPointDetailApi(APIView):
         s = PointSer(queryset, many=True)
         return Response(s.data)
 
+    def post(self, request):
+        s = PointSer(data=request.data)
+        if s.is_valid():
+            p = User.objects.create(
+                phone = s.validated_data['phone'],
+                name = s.validated_data['name'],
+                bin_iin = s.validated_data['bin_iin'],
+                order_sector = s.validated_data['order_sector']
+            )
+            return Response({'status': 'ok'})
+        else:
+            return Response(s.errors)
+
 
 # class pushRegister(APIView):
 #     permission_classes = [permissions.IsAuthenticated]

@@ -100,4 +100,5 @@ class contgentSer(serializers.ModelSerializer):
 class PointSer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("phone", "name", "bin_iin", "credit", "paymets", "galleon", "debt", "order_sector")
+        fields = ("id", "phone", "name", "bin_iin", "credit", "paymets", "galleon", "debt", "order_sector")
+        read_only_fields = ("id",)
