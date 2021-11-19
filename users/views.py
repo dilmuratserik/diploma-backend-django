@@ -256,6 +256,7 @@ class TPUserView(viewsets.ModelViewSet):
                 ava = compress_image(ava, (400, 400))
                 instance.avatar = ava
             instance.name = validated_data.get('name', instance.name)
+            instance.show_plan = validated_data.get('show_plan', instance.show_plan)
             instance.order_sector = validated_data.get('order_sector', instance.order_sector)
             instance.type_price = validated_data.get('type_price', instance.type_price)
             instance.storage = validated_data.get('storage', instance.storage)
@@ -268,12 +269,22 @@ class TPUserView(viewsets.ModelViewSet):
             return Response(s.errors)
 
 
-class GetPointApi(APIView):
+class GetPointListApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
         queryset = User.objects.filter(role=2)
         s = CountrySer(queryset, many=True)
+        return Response(s.data)
+
+
+
+class GetPointDetailApi(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        queryset = User.objects.filter(role=2)
+        s = PointSer(queryset, many=True)
         return Response(s.data)
 
 

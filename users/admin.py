@@ -14,12 +14,12 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {"fields": ('phone', 'password'),}),
         ("Personal info", {"fields": ('role', 'name', 'email','avatar', 
-                        'birth_date', 'country', 'city','location', 'last_online', 
-                        'type_price', 'storage', 'order_sector')}),
+                        'birth_date', 'country', 'city','location', 'last_online')}),
+        ("tp", {"fields": ('type_price', 'storage', 'order_sector', 'show_plan', 'show_plan_date')}),
         ("Юр info", {"fields": ('bin_iin', 'credit', 'debt', 'paymets', 'galleon', 'agent')}),
         ("Permissions", {"fields": ('is_moder', 'is_staff', 'is_active')})
     )
-    # readonly_fields = ('created_at', )
+    readonly_fields = ('created_at', 'show_plan_date')
 
     add_fieldsets = (
         (None, {

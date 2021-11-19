@@ -81,17 +81,23 @@ class TPUserSerializer(serializers.ModelSerializer):
     storage = StrogeSer()
     class Meta:
         model = User
-        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id', 'password', 'role')
+        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id', 'password', 'role', 'show_plan')
         read_only_fields = ('id',)
 
 class CourierUserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
     class Meta:
         model = User
-        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id', 'role', 'password')
+        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id', 'role', 'password', 'show_plan')
         read_only_fields = ('id',)
 
 class contgentSer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('name', 'role', 'bin_iin', 'phone')
+
+
+class PointSer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("phone", "name", "bin_iin", "credit", "paymets", "galleon", "debt", "order_sector")

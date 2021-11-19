@@ -118,6 +118,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     debt = models.IntegerField(default=0)
     agent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
 
+    show_plan = models.IntegerField(default=24, blank=True)
+    show_plan_date = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = []
