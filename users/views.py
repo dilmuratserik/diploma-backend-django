@@ -294,7 +294,8 @@ class GetPointDetailApi(APIView):
                 phone = s.validated_data['phone'],
                 name = s.validated_data['name'],
                 bin_iin = s.validated_data['bin_iin'],
-                order_sector = s.validated_data['order_sector']
+                order_sector = s.validated_data['order_sector'],
+                role = 2
             )
             return Response({'status': 'ok'})
         else:
