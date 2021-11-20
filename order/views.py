@@ -48,11 +48,14 @@ class CreateOrderApi(APIView):
             )
             products = s.validated_data['products']
             for i in products:
+                p = Product.objects.get(id=i['id'])
                 OrderProduct.objects.create(
-                    product = Product.objects.get(id=i['id']),
+                    product = p,
                     count = i['count'],
                     order = order
                 )
+                p.count_order += 1
+                p.save()
             return Response({'status': "ok"})
         else:
             return Response(s.errors)
