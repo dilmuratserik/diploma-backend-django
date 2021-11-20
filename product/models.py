@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields import BigIntegerField
 from django.utils.translation import ugettext_lazy as _
 from io import BytesIO
 from PIL import Image
@@ -28,6 +29,7 @@ class Product(models.Model):
     count = models.BigIntegerField(default = 0)
     uuid = models.CharField(max_length=150, blank=True, null=True)
     unit = models.SmallIntegerField(default = 1)
+    count_order = models.BigIntegerField(default = 0)
 
     def __str__(self):
         return self.name

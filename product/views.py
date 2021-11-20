@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import pagination
 from rest_framework.views import APIView
 import random
 from .serializers import *
@@ -30,7 +31,7 @@ class getProduct(viewsets.ModelViewSet):
             return self.queryset.filter(price__gte=minheight, price__lte=maxheight)
         return self.queryset
 
-class GetProduct(APIView):
+class CreateProduct(APIView):
     permission_classes = [permissions.AllowAny,]
 
     def post(self, request):
@@ -91,3 +92,19 @@ class GetProductCode(APIView):
                 return Response({'status': 'not found'})
         else:
             return Response(s.errors)
+
+
+class HitsApi(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny,]
+    queryset = Product.objects.all().order_by("-count_order")[:4]
+    serializer_class = productSer
+    pagination_class = None
+
+
+class RecommendationApi(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny,]
+    queryset = Product.objects.all().order_by("?")[:4]
+    serializer_class = productSer
+    pagination_class = None
+
+
