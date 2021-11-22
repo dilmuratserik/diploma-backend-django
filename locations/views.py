@@ -6,7 +6,7 @@ import random
 from .serializers import *
 from .models import *
 from rest_framework.response import Response
-from rest_framework import permissions, exceptions
+from rest_framework import permissions, status
 from rest_framework.decorators import permission_classes
 from rest_framework import viewsets, generics
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, GenericAPIView, RetrieveUpdateAPIView
@@ -35,7 +35,7 @@ class AddressView(APIView):
             )
             return Response({'status': 'ok'})
         else:
-            return Response({'status': 'error'})
+            return Response({'status': 'error'}, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
         s = IdSer(data=request.data)
@@ -45,9 +45,9 @@ class AddressView(APIView):
                 address.first().delete()
                 return Response({'status': 'ok'})
             else:
-                return Response({'status': 'not found'})
+                return Response({'status': 'not found'}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response(s.errors)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class changeAddress(APIView):
@@ -69,9 +69,9 @@ class changeAddress(APIView):
                 address.save()
                 return Response({'status': 'ok'})
             else:
-                return Response({'status': 'not found'})
+                return Response({'status': 'not found'}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response(s.errors)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CountryApi(APIView):
     permission_classes = [permissions.AllowAny,]

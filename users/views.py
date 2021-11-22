@@ -43,7 +43,7 @@ class PhoneCode(APIView):
             phone = s.validated_data['phone']
             user = User.objects.filter(phone=phone)
             if user.exists():
-                return Response({'status': 'already exists'}, code=status.HTTP_400_BAD_REQUEST)
+                return Response({'status': 'already exists'}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 p = PhoneOTP.objects.filter(phone = phone)
                 if p.exists():
@@ -62,7 +62,7 @@ class PhoneCode(APIView):
                     # smsc.send_sms(phone, "Код подтверждения для ALU.KZ: "+str(rand), sender="sms")
                 return Response({'status': 'ok'})
         else:
-            return Response(s.errors,code=status.HTTP_400_BAD_REQUEST)
+            return Response(s.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
 class Register(APIView):
@@ -71,7 +71,6 @@ class Register(APIView):
     def post(self, request):
         s = RegisterSerializer(data=request.data)
         if s.is_valid():
-            print('register: ', s.validated_data['phone'], s.validated_data['code'])
             phone = s.validated_data['phone']
             u = PhoneOTP.objects.get(phone=phone)
             if u.otp == str(s.validated_data['code']):
@@ -94,9 +93,9 @@ class Register(APIView):
                 # django_login(request, us)
                 return Response({'key': token.key, 'uid': uid, 'status': 'ok'})
             else:
-                return Response({'status': 'otp error'}, code=status.HTTP_400_BAD_REQUEST)
+                return Response({'status': 'otp error'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RegisterationContinue(APIView):
@@ -122,7 +121,7 @@ class RegisterationContinue(APIView):
             user.save()
             return Response({'status': 'ok'})
         else:
-            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
 
@@ -146,11 +145,11 @@ class Logined(APIView):
                         token = Token.objects.create(user=us)
                     return Response({'key': token.key, 'uid': us.id, 'status': 'ok', 'role': us.role})
                 else:
-                    return Response({'status': 'error'}, code=status.HTTP_400_BAD_REQUEST)
+                    return Response({'status': 'error'}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({'status': 'not found'}, code=status.HTTP_404_NOT_FOUND)
+                return Response({'status': 'not found'}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 from utils.compress import compress_image
@@ -166,7 +165,7 @@ class Avatar(APIView):
             request.user.save()
             return Response({'status': "ok", "avatar": request.user.avatar.url})
         else:
-            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class detailUser(APIView):
@@ -195,9 +194,9 @@ class PasswordChangeView(APIView):
                 user.save()
                 return Response({'status': 'ok'})
             else:
-                return Response({'status': 'error'}, code=status.HTTP_400_BAD_REQUEST)
+                return Response({'status': 'error'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'status': 'error'}, code=status.HTTP_400_BAD_REQUEST)
+            return Response({'status': 'error'}, status=status.HTTP_400_BAD_REQUEST)
     
 
 
@@ -214,9 +213,9 @@ class login_admin(APIView):
                 if us.check_password(password):
                     us = us
                 else:
-                    return Response({'status': 'error'}, code=status.HTTP_400_BAD_REQUEST)
+                    return Response({'status': 'error'}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({'status': 'error'}, code=status.HTTP_404_NOT_FOUND)
+                return Response({'status': 'error'}, status=status.HTTP_404_NOT_FOUND)
             if Token.objects.filter(user=us).exists():
                 token = Token.objects.get(user=us)
             else:
@@ -224,7 +223,7 @@ class login_admin(APIView):
             # django_login(request, us)
             return Response({'key': token.key, 'uid': us.pk})
         else:
-            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -267,7 +266,7 @@ class TPUserView(viewsets.ModelViewSet):
             instance.save()
             return Response({'status': 'ok'})
         else:
-            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetPointListApi(APIView):
@@ -291,7 +290,7 @@ class GetPointDetailApi(APIView):
         s = PointSer(data=request.data)
         if s.is_valid():
             if User.objects.filter(phone = s.validated_data['phone']).exists():
-                return Response({'status': 'already exists'}, code=status.HTTP_400_BAD_REQUEST)
+                return Response({'status': 'already exists'}, status=status.HTTP_400_BAD_REQUEST)
             p = User.objects.create(
                 phone = s.validated_data['phone'],
                 name = s.validated_data['name'],
@@ -302,7 +301,7 @@ class GetPointDetailApi(APIView):
             )
             return Response({'status': 'ok'})
         else:
-            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CourierListApi(APIView):

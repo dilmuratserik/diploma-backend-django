@@ -14,13 +14,13 @@ urlpatterns = [
     path('register/continue/', views.RegisterationContinue.as_view()),
 
     path('get/detail/<id>', views.detailUser.as_view()),
-    path('point/list/', views.GetPointListApi.as_view()),
     # path('detail', views.detailUser2.as_view()),
+
     path('password/change/', views.PasswordChangeView.as_view()),
     path('change/ava/', views.Avatar.as_view()),
 
     path('points/', views.GetPointDetailApi.as_view()),
-
+    path('point/list/', views.GetPointListApi.as_view()),
     path('courier/list/', views.CourierListApi.as_view()),
 ]
 urlpatterns += router.urls

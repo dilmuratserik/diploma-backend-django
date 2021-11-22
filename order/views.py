@@ -56,7 +56,7 @@ class CreateOrderApi(APIView):
                 p.save()
             return Response({'status': "ok"})
         else:
-            return Response(s.errors)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CourierOrderHistory(APIView):
@@ -86,7 +86,7 @@ class ScheduleApi(APIView):
             )
             return Response({'status': 'ok'})
         else:
-            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
         s = ScheduleChangeSer(data=request.data)
@@ -98,7 +98,7 @@ class ScheduleApi(APIView):
             schedule.save()
             return Response({'status': 'ok'})
         else:   
-            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
