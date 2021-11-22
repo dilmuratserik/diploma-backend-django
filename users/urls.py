@@ -21,6 +21,6 @@ urlpatterns = [
 
     path('points/', views.GetPointDetailApi.as_view()),
 
-    path('courier/list/', views.CourierListApi.as_view({'get': 'list'})),
+    path('courier/list/', views.CourierListApi.as_view()),
 ]
 urlpatterns += router.urls
