@@ -19,6 +19,8 @@ urlpatterns = [
     path('password/change/', views.PasswordChangeView.as_view()),
     path('change/ava/', views.Avatar.as_view()),
 
-    path('points/', views.GetPointDetailApi.as_view())
+    path('points/', views.GetPointDetailApi.as_view()),
+
+    path('courier/list/', views.CourierListApi.as_view({'get': 'list'})),
 ]
 urlpatterns += router.urls

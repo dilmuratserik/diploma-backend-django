@@ -274,9 +274,8 @@ class GetPointListApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        queryset = User.objects.filter(role=2)
-        s = CountrySer(queryset, many=True)
-        return Response(s.data)
+        queryset = User.objects.values('id', 'phone', 'name').filter(role=2)
+        return Response(queryset)
 
 
 
@@ -304,6 +303,15 @@ class GetPointDetailApi(APIView):
             return Response({'status': 'ok'})
         else:
             return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
+
+
+class CourierListApi(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def get(self, request):
+        queryset = User.objects.values('id', 'phone', 'name').filter(role=4)
+        return Response(queryset)
+
 
 
 # class pushRegister(APIView):
