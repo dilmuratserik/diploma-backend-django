@@ -1,7 +1,3 @@
-import re
-from django.db.models import manager
-from django.db.models.query import QuerySet
-from django.shortcuts import render
 from rest_framework.views import APIView
 import random
 from product.models import Product
@@ -11,8 +7,7 @@ from locations.models import Country, City, Outlets
 from users.models import User
 from rest_framework.response import Response
 from rest_framework import permissions
-from rest_framework import viewsets, generics
-from rest_framework.generics import RetrieveUpdateDestroyAPIView, GenericAPIView, RetrieveUpdateAPIView
+from rest_framework import viewsets, generics, status
 from datetime import date, datetime
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
@@ -38,15 +33,18 @@ class CreateOrderApi(APIView):
 
     def post(self, request):
         s = orderCreateSer(data=request.data)
+        from collections import OrderedDict
         if s.is_valid():
-            print(s.validated_data)
+            if type(s.validated_data) == OrderedDict:
+                vd = dict(s.validated_data)
+            else:
+                vd = s.validated_data
             order = Order.objects.create(
-                type_delivery = s.validated_data.get('type_delivery', 1),
-                # outlet = Outlets.objects.get(s.validated_data['outlet']),
-                counterparty = User.objects.get(['counterparty']),
-                delivered_date = s.validated_data.get('delivered_date', None)
+                type_delivery = vd.get('type_delivery', 1),
+                counterparty = User.objects.get(id=vd['counterparty']),
+                delivered_date = vd.get('delivered_date', None)
             )
-            products = s.validated_data['products']
+            products = vd['products']
             for i in products:
                 p = Product.objects.get(id=i['id'])
                 OrderProduct.objects.create(
@@ -88,7 +86,7 @@ class ScheduleApi(APIView):
             )
             return Response({'status': 'ok'})
         else:
-            return Response(s.errors)
+            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
         s = ScheduleChangeSer(data=request.data)
@@ -99,9 +97,8 @@ class ScheduleApi(APIView):
             schedule.comments = s.validated_data.get('comments', schedule.comments)
             schedule.save()
             return Response({'status': 'ok'})
-
         else:   
-            return Response(s.errors)
+            return Response(s.errors, code=status.HTTP_400_BAD_REQUEST)
 
 
 
