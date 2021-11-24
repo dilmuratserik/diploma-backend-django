@@ -34,6 +34,7 @@ class orderCreateSer(serializers.Serializer):
     counterparty = serializers.IntegerField()
     type_delivery = serializers.IntegerField(required=False)
     delivered_date = serializers.DateField(required=False)
+    delivery_address = serializers.IntegerField(required=False)
 
 
 

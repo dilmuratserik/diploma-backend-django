@@ -3,7 +3,7 @@ import random
 from product.models import Product
 from .serializers import *
 from .models import *
-from locations.models import Country, City, Outlets
+from locations.models import Address, Country, City, Outlets
 from users.models import User
 from rest_framework.response import Response
 from rest_framework import permissions
@@ -39,10 +39,15 @@ class CreateOrderApi(APIView):
                 vd = dict(s.validated_data)
             else:
                 vd = s.validated_data
+            address_id = s.validated_data.get('delivery_address', None)
+            address = None
+            if address_id:
+                address = Address.objects.get(id=address_id)
             order = Order.objects.create(
                 type_delivery = vd.get('type_delivery', 1),
                 counterparty = User.objects.get(id=vd['counterparty']),
-                delivered_date = vd.get('delivered_date', None)
+                delivered_date = vd.get('delivered_date', None),
+                delivery_address = address
             )
             products = vd['products']
             for i in products:
