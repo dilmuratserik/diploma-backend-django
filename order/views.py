@@ -60,7 +60,7 @@ class CreateOrderApi(APIView):
 
 
 class CourierOrderHistory(APIView):
-    permission_classes = (permissions.IsAuthenticated,)\
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
         queryset = Order.objects.filter(status__in=(3,4), courier = request.user)
@@ -101,6 +101,32 @@ class ScheduleApi(APIView):
             return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class IndividualHistoryApi(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        queryset = Order.objects.filter(counterparty=request.user, status__in=(2,3,4))
+        s = OrderSer(queryset, many=True)
+        return Response(s.data)
+
+
+class CourierOrderChange(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        s = CourierOrderSer(data=request.data)
+        if s.is_valid():
+            order = Order.objects.get(id=s.validated_data['id'])
+            comment = s.validated_data.get('comment', None)
+            if comment:
+                order.comment = comment
+            status = s.validated_data.get('status', None)
+            if status:
+                order.status = status
+            order.save()
+            return Response({'status': 'ok'})
+        else:
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # class BasketApi(APIView):
 #     permission_classes = (permissions.IsAuthenticated,)

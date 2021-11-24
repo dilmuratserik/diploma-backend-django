@@ -24,6 +24,16 @@ class Order(models.Model):
         (TYPE_PICKUP, 'Самовывоз'),
         (TYPE_DELIVER, 'Доставка')
     )
+
+    TYPE_PAYMENT_SPOT = 1
+    TYPE_PAYMENT_CARD = 2
+    TYPE_PAYMENT_KASPI = 3
+    TYPE_PAYMENT = (
+        (TYPE_PAYMENT_SPOT, 'Оплата наличными'),
+        (TYPE_PAYMENT_CARD, 'Картой Visa/MasterCard '),
+        (TYPE_PAYMENT_KASPI, 'Оплата в системе Kaspi.kz')
+    )
+
     date = models.DateTimeField(auto_now_add=True)
     # outlet = models.ForeignKey("locations.Outlets", on_delete=models.CASCADE,null=True, blank=True)
     type_order = models.SmallIntegerField(choices=TYPE_ORDER, blank=True, null=True, default = 1)
@@ -33,6 +43,8 @@ class Order(models.Model):
     counterparty = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True, related_name='conterparty')
     type_delivery = models.SmallIntegerField(choices=TYPE_DELIVERY, blank=True, null=True, default = 1)
     total = models.BigIntegerField(null=True, blank=True, default=0)
+    type_payment = models.SmallIntegerField(choices=TYPE_PAYMENT, default = 1)
+    comment = models.TextField(blank=True)
 
     def __str__(self):
         return f'{self.id}'
@@ -69,7 +81,7 @@ class Schedule(models.Model):
     agent = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="agent_shedule")
     plan = models.BooleanField(default=False)
     fact = models.BooleanField(default=False)
-    comments = models.TextField(blank=True)
+    comment = models.TextField(blank=True)
 
     def __str__(self):
         return f'{self.point.name}, {self.date}'

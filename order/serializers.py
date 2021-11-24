@@ -57,6 +57,12 @@ class ScheduleChangeSer(serializers.ModelSerializer):
     fact = serializers.BooleanField()
     comments = serializers.CharField()
 
+
+class CourierOrderSer(serializers.Serializer):
+    id=serializers.IntegerField()
+    comment = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
+
 # class BasketSer(serializers.Serializer):
 #     products = serializers.ListField()
 
