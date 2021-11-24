@@ -106,10 +106,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     #--------------------------------------------------------
     created_at = models.DateTimeField(auto_now_add=True)
     last_online = models.DateTimeField(null=True, blank=True)
-    #--------------------------------------------------------
     avatar = models.ImageField(upload_to=user_photos_dir, default="default/default.jpg")
-    # favorites = models.ManyToManyField("products.Product", related_name="favs", blank=True)
-    # basket = models.ManyToManyField("products.Product", related_name="basket", blank=True)
     # -------------------------------------------------------
 
     credit = models.CharField(max_length = 300, null=True, blank=True)
@@ -117,6 +114,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     galleon = models.BooleanField(default=True)
     debt = models.IntegerField(default=0)
     agent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+
+    bonus = models.BigIntegerField(default = 0)
 
     show_plan = models.IntegerField(default=24, blank=True)
     show_plan_date = models.DateTimeField(auto_now=True)

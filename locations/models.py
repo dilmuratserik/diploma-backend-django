@@ -51,7 +51,7 @@ class Address(models.Model):
     lng = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
     def __str__(self):
-        return self.user.phone
+        return self.user.phone + " " + str(self.id)
 
 
 class Storage_region(models.Model):

@@ -110,7 +110,7 @@ class IndividualHistoryApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        queryset = Order.objects.filter(counterparty=request.user, status__in=(2,3,4))
+        queryset = Order.objects.filter(counterparty=request.user)
         s = OrderSer(queryset, many=True)
         return Response(s.data)
 
