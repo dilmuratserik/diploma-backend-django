@@ -63,6 +63,7 @@ class CourierOrderSer(serializers.Serializer):
     id=serializers.IntegerField()
     comment = serializers.CharField(required=False)
     status = serializers.IntegerField(required=False)
+    date = serializers.DateField(required=False)
 
 # class BasketSer(serializers.Serializer):
 #     products = serializers.ListField()

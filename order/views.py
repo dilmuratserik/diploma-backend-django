@@ -128,6 +128,9 @@ class CourierOrderChange(APIView):
             status = s.validated_data.get('status', None)
             if status:
                 order.status = status
+            date = s.validated_data.get('date', None)
+            if date:
+                order.delivered_date = date
             order.save()
             return Response({'status': 'ok'})
         else:
