@@ -17,7 +17,7 @@ class RegisterSerializer(serializers.Serializer):
     code = serializers.CharField()
 
 class AvatarSerializer(serializers.Serializer):
-    avatar = serializers.CharField()
+    avatar = serializers.FileField()
 
 class CountrySer(serializers.Serializer):
     name = serializers.CharField()
