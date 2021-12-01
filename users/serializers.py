@@ -93,9 +93,10 @@ class contgentSer(serializers.ModelSerializer):
 
 
 class PointSer(serializers.ModelSerializer):
+    agent = CountrySer()
     class Meta:
         model = User
-        fields = ("id", "phone", "name", "bin_iin", "credit", "paymets", "debt", "order_sector", 'agent')
+        fields = ("id", "phone", "name", "bin_iin", "credit", "paymets", "debt", "order_sector", 'agent', 'storage', 'city')
         read_only_fields = ("id",)
 
 
