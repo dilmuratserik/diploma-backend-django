@@ -1,3 +1,4 @@
+from rest_framework.decorators import permission_classes
 from rest_framework.views import APIView
 import random
 from product.models import Product
@@ -135,6 +136,14 @@ class CourierOrderChange(APIView):
             return Response({'status': 'ok'})
         else:
             return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class OrderAllApi(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Order.objects.all()
+    serializer_class = OrderSer
+    filter_fields = ('counterparty', 'status', 'courier', 'delivered_date', 'date')
+
 
 
 

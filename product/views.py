@@ -23,7 +23,7 @@ class getProduct(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     # pagination_class = PageNumberPagination
     search_fields = ('name', 'description')
-    filter_fields = ('category', 'subcategory')
+    filter_fields = ('category', 'subcategory', 'status')
     
     def get_queryset(self):
         minheight = self.request.GET.get('minprice')
