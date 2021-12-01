@@ -1,5 +1,6 @@
+from re import A
 from django.shortcuts import render
-from rest_framework import pagination
+from rest_framework import pagination, status
 from rest_framework.views import APIView
 import random
 from .serializers import *
@@ -13,7 +14,7 @@ from datetime import datetime
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination # Any other type works as well
-
+from utils.compress import compress_image
 
 class getProduct(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny,]
@@ -111,3 +112,20 @@ class RecommendationApi(viewsets.ModelViewSet):
     pagination_class = None
 
 
+class PorudyctImage(APIView):
+    permission_classes = [permissions.IsAuthenticated,]
+
+    def post(self, request, id):
+        s = PoruductImagePostSer(data=request.data)
+        if s.is_valid():
+            product = Product.objects.get(id=id)
+            images = s.validated_data['images']
+            for i in images:
+                img = compress_image(i, (400, 400))
+                ProductImage.objects.create(
+                    image = img,
+                    product = product
+                )
+            return Response({'status': 'ok'})
+        else:
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)

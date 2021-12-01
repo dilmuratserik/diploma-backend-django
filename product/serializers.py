@@ -31,3 +31,7 @@ class productSer2(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = "__all__"
+
+
+class PoruductImagePostSer(serializers.Serializer):
+    images = serializers.ListField()

@@ -125,7 +125,6 @@ class RegisterationContinue(APIView):
             return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
-
 class Logined(APIView):
     permission_classes = [permissions.AllowAny,]
 

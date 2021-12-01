@@ -7,5 +7,7 @@ urlpatterns = [
     path('unload/<code>', views.GetProductCode.as_view()),
 
     path('hits/', views.HitsApi.as_view({'get': 'list'})),
-    path('recommendation/', views.RecommendationApi.as_view({'get': 'list'}))
+    path('recommendation/', views.RecommendationApi.as_view({'get': 'list'})),
+
+    path('add/image/<id>', views.PorudyctImage.as_view())
 ]
