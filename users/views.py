@@ -14,7 +14,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework import viewsets, generics, status
 from datetime import datetime
 from django.utils.translation import ugettext_lazy as _
-
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 # from products.models import *
 # from utils.compress import *
 # from push_notifications.models import APNSDevice, GCMDevice
@@ -321,6 +322,19 @@ class AddAgenttoPointsApi(APIView):
             return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class adminAllPointAPI(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = User.objects.filter(role=2)
+    serializer_class = PointSer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ('name',)
+    filter_fields = ('agent',)
+
+    def get_queryset(self):
+        sort_by_price = self.request.GET.get('sort_debt')
+        if sort_by_price:
+            return self.queryset.order_by(sort_by_price)
+        return self.queryset
 
 
 
