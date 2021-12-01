@@ -11,6 +11,6 @@ urlpatterns = [
     path('history/', views.IndividualHistoryApi.as_view()),
     path('courier/order/change/', views.CourierOrderChange.as_view()),
 
-    path('admin/', views.OrderAllApi.as_view({'get': 'list'})
+    path('admin/', views.OrderAllApi.as_view({'get': 'list'}))
     # path('basket/', views.BasketApi.as_view())
 ]
