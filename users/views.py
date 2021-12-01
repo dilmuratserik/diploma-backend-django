@@ -325,7 +325,7 @@ class AddAgenttoPointsApi(viewsets.ModelViewSet):
         s = AddAgenttoPointSer(data=request.data)
         if s.is_valid():
             point = User.objects.get(id=id)
-            point.agent = s.validated_data['agent']
+            point.agent = User.objects.get(id=s.validated_data['agent']) 
             point.save()
             return Response({'status':' ok'})
         else:
