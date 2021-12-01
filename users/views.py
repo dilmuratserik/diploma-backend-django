@@ -318,7 +318,7 @@ class GetPointOfTP(APIView):
         return Response(queryset)
 
 
-class AddAgenttoPointsApi(viewsets.ModelViewSet):
+class AddAgenttoPointsApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, id):
