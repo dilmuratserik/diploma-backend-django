@@ -1,5 +1,3 @@
-from django.db.models import query
-from django.shortcuts import render
 from rest_framework.views import APIView
 import random
 from .serializers import *
@@ -14,15 +12,7 @@ from django.contrib.auth import (login as django_login,
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework import viewsets, generics, status
-from rest_framework.generics import RetrieveUpdateDestroyAPIView, GenericAPIView, RetrieveUpdateAPIView
 from datetime import datetime
-from django.utils.decorators import method_decorator
-from django.views.decorators.debug import sensitive_post_parameters
-sensitive_post_parameters_m = method_decorator(
-    sensitive_post_parameters(
-        'password', 'old_password', 'new_password1', 'new_password2'
-    )
-)
 from django.utils.translation import ugettext_lazy as _
 
 # from products.models import *
@@ -199,7 +189,6 @@ class PasswordChangeView(APIView):
             return Response({'status': 'error'}, status=status.HTTP_400_BAD_REQUEST)
     
 
-
 class login_admin(APIView):
     permission_classes = [permissions.AllowAny,]
 
@@ -224,7 +213,6 @@ class login_admin(APIView):
             return Response({'key': token.key, 'uid': us.pk})
         else:
             return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class TPUserView(viewsets.ModelViewSet):
@@ -309,6 +297,7 @@ class CourierListApi(APIView):
     def get(self, request):
         queryset = User.objects.values('id', 'phone', 'name').filter(role=4)
         return Response(queryset)
+
 
 class GetPointOfTP(APIView):
     permission_classes = (permissions.IsAuthenticated,)
