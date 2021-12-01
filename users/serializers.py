@@ -88,7 +88,7 @@ class CourierUserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
     class Meta:
         model = User
-        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id', 'role', 'password', 'show_plan')
+        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id', 'role', 'password', 'show_plan', 'agent')
         read_only_fields = ('id',)
 
 class contgentSer(serializers.ModelSerializer):
