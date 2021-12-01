@@ -1,3 +1,4 @@
+from django.db.models import query
 from django.shortcuts import render
 from rest_framework.views import APIView
 import random
@@ -311,6 +312,14 @@ class CourierListApi(APIView):
         queryset = User.objects.values('id', 'phone', 'name').filter(role=4)
         return Response(queryset)
 
+
+
+class GetPointOfTP(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, id):
+        queryset = User.objects.values('id', 'name').filter(agent__id=id, role=2)
+        return Response(queryset)
 
 
 # class pushRegister(APIView):

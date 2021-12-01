@@ -27,8 +27,11 @@ class getProduct(viewsets.ModelViewSet):
     def get_queryset(self):
         minheight = self.request.GET.get('minprice')
         maxheight = self.request.GET.get('maxprice')
+        sort_by_price = self.request.GET.get('sort_price')
         if(minheight and maxheight):
             return self.queryset.filter(price__gte=minheight, price__lte=maxheight)
+        if sort_by_price:
+            return self.queryset.order_by(sort_by_price)
         return self.queryset
 
 class CreateProduct(APIView):
