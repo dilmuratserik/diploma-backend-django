@@ -8,7 +8,6 @@ class LoginAdminSerializer(serializers.Serializer):
     phone = serializers.CharField()
     password = serializers.CharField()
 
-
 class PhoneS(serializers.Serializer):
     phone = serializers.CharField(max_length=15)
     # name = serializers.CharField(required=False)
@@ -17,7 +16,6 @@ class RegisterSerializer(serializers.Serializer):
     phone = serializers.CharField(max_length=15)
     code = serializers.CharField()
 
-
 class AvatarSerializer(serializers.Serializer):
     avatar = serializers.CharField()
 
@@ -25,9 +23,9 @@ class CountrySer(serializers.Serializer):
     name = serializers.CharField()
     id = serializers.IntegerField()
 
-
 class StrogeSer(serializers.Serializer):
     name = serializers.CharField()
+
 class UserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
     # type_price = serializers.IntegerField(read_only_fields)
@@ -70,12 +68,9 @@ class Registration(serializers.Serializer):
     city = serializers.IntegerField()
     role = serializers.IntegerField()
 
-
 class PasswordChangeSerializer(serializers.Serializer):
     old_password = serializers.CharField(max_length=128)
     new_password = serializers.CharField(max_length=128)
-    
-
 
 class TPUserSerializer(serializers.ModelSerializer):
     storage = StrogeSer()
@@ -100,5 +95,9 @@ class contgentSer(serializers.ModelSerializer):
 class PointSer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "phone", "name", "bin_iin", "credit", "paymets", "galleon", "debt", "order_sector")
+        fields = ("id", "phone", "name", "bin_iin", "credit", "paymets", "debt", "order_sector", 'agent')
         read_only_fields = ("id",)
+
+
+class AddAgenttoPointSer(serializers.Serializer):
+    agent = serializers.IntegerField()

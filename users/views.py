@@ -277,7 +277,6 @@ class GetPointListApi(APIView):
         return Response(queryset)
 
 
-
 class GetPointDetailApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -311,14 +310,29 @@ class CourierListApi(APIView):
         queryset = User.objects.values('id', 'phone', 'name').filter(role=4)
         return Response(queryset)
 
-
-
 class GetPointOfTP(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, id):
         queryset = User.objects.values('id', 'name').filter(agent__id=id, role=2)
         return Response(queryset)
+
+
+class AddAgenttoPointsApi(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, id):
+        s = AddAgenttoPointSer(data=request.data)
+        if s.is_valid():
+            point = User.objects.get(id=id)
+            point.agent = s.validated_data['agent']
+            point.save()
+            return Response({'status':' ok'})
+        else:
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 
 # class pushRegister(APIView):
