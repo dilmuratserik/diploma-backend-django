@@ -220,6 +220,14 @@ class TPUserView(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = User.objects.filter(role__in=(3, 4))
     serializer_class = TPUserSerializer
+    search_fields = ('name',)
+    filter_fields = ('type_price', 'role', 'storage')
+
+    def get_queryset(self):
+        sort_by_price = self.request.GET.get('sort_debt')
+        if sort_by_price:
+            return self.queryset.order_by(sort_by_price)
+        return self.queryset
 
     def create(self, request):
         s = CourierUserSerializer(data=request.data)
