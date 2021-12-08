@@ -44,7 +44,7 @@ class CreateOrderApi(APIView):
             if address_id:
                 address = Address.objects.get(id=address_id)
             paddress = None
-            paddress_id = s.validated_data.get('delivery_address', None)
+            paddress_id = s.validated_data.get('pickup_address', None)
             if paddress_id:
                 paddress = Storage_region.objects.get(id=paddress_id)
             user = User.objects.get(id=vd['counterparty'])
