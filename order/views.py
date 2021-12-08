@@ -1,18 +1,18 @@
 from rest_framework.decorators import permission_classes
 from rest_framework.views import APIView
-import random
 from product.models import Product
 from .serializers import *
 from .models import *
-from locations.models import Address, Country, City, Outlets
+from locations.models import Address, Country, City, Outlets, Storage_region
 from users.models import User
 from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework import viewsets, generics, status
-from datetime import date, datetime
-from rest_framework import filters
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.pagination import PageNumberPagination 
+# import random
+# from datetime import date, datetime
+# from rest_framework import filters
+# from django_filters.rest_framework import DjangoFilterBackend
+# from rest_framework.pagination import PageNumberPagination 
 
 
 class OrderApi(APIView):
@@ -22,7 +22,6 @@ class OrderApi(APIView):
         o = Order.objects.all()
         s = OrderSer(o, many=True)
         return Response(s.data)
-
 
 class CreateOrderApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -44,11 +43,17 @@ class CreateOrderApi(APIView):
             address = None
             if address_id:
                 address = Address.objects.get(id=address_id)
+            paddress = None
+            paddress_id = s.validated_data.get('delivery_address', None)
+            if paddress_id:
+                paddress = Storage_region.objects.get(id=paddress_id)
+            user = User.objects.get(id=vd['counterparty'])
             order = Order.objects.create(
                 type_delivery = vd.get('type_delivery', 1),
-                counterparty = User.objects.get(id=vd['counterparty']),
+                counterparty = user,
                 delivered_date = vd.get('delivered_date', None),
-                delivery_address = address
+                delivery_address = address,
+                pickup_address = paddress
             )
             products = vd['products']
             for i in products:
@@ -60,6 +65,11 @@ class CreateOrderApi(APIView):
                 )
                 p.count_order += 1
                 p.save()
+            bonus = s.validated_data.get('bonus', None)
+            if bonus:
+                user.bonus = 0
+            user.bonus = order.total * 0.1
+            user.save()
             return Response({'status': "ok"})
         else:
             return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -72,7 +82,6 @@ class CourierOrderHistory(APIView):
         queryset = Order.objects.filter(status__in=(3,4), courier = request.user)
         s = OrderSer(queryset, many=True)
         return Response(s.data)
-
 
 class ScheduleApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -106,7 +115,6 @@ class ScheduleApi(APIView):
         else:   
             return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class IndividualHistoryApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -114,7 +122,6 @@ class IndividualHistoryApi(APIView):
         queryset = Order.objects.filter(counterparty=request.user)
         s = OrderSer(queryset, many=True)
         return Response(s.data)
-
 
 class CourierOrderChange(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -137,16 +144,25 @@ class CourierOrderChange(APIView):
         else:
             return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class OrderAllApi(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Order.objects.all()
     serializer_class = OrderSer
     filter_fields = ('counterparty', 'status', 'courier', 'delivered_date', 'date')
 
+class AddCourierToOrder(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
 
-
-
+    def post(self, request):
+        s = AddCourierToOrderSer(data=request.data)
+        if s.is_valid():
+            order = Order.objects.get(id=s.validated_data['order_id'])
+            courier = User.objects.get(id=s.validated_data['courier_id'])
+            order.courier = courier
+            order.save()
+            return Response({'status': 'ok'})
+        else:
+            return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class BasketApi(APIView):

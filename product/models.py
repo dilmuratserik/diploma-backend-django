@@ -30,6 +30,8 @@ class Product(models.Model):
     uuid = models.CharField(max_length=150, blank=True, null=True)
     unit = models.SmallIntegerField(default = 1)
     count_order = models.BigIntegerField(default = 0)
+    company = models.ForeignKey('users.Company', on_delete=models.CASCADE, null=True, blank=True)
+
 
     def __str__(self):
         return self.name

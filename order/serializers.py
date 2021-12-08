@@ -28,13 +28,14 @@ class OrderSer(serializers.ModelSerializer):
 
 class orderCreateSer(serializers.Serializer):
     courier = serializers.IntegerField(required=False)
-    # outlet = serializers.IntegerField()
     products = serializers.ListField()
     type_order = serializers.IntegerField(required=False)
     counterparty = serializers.IntegerField()
     type_delivery = serializers.IntegerField(required=False)
     delivered_date = serializers.DateField(required=False)
     delivery_address = serializers.IntegerField(required=False)
+    pickup_address = serializers.IntegerField(required=False)
+    bonus = serializers.BooleanField(required=False)
 
 
 
@@ -64,6 +65,11 @@ class CourierOrderSer(serializers.Serializer):
     comment = serializers.CharField(required=False)
     status = serializers.IntegerField(required=False)
     date = serializers.DateField(required=False)
+
+
+class AddCourierToOrderSer(serializers.Serializer):
+    order_id = serializers.IntegerField()
+    courier_id = serializers.IntegerField()
 
 # class BasketSer(serializers.Serializer):
 #     products = serializers.ListField()

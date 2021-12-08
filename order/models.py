@@ -36,6 +36,7 @@ class Order(models.Model):
 
     date = models.DateTimeField(auto_now_add=True)
     delivery_address = models.ForeignKey("locations.Address", on_delete=models.CASCADE, null=True, blank=True)
+    pickup_address = models.ForeignKey("locations.Storage_region", on_delete=models.CASCADE, null=True, blank=True)
     type_order = models.SmallIntegerField(choices=TYPE_ORDER, blank=True, null=True, default = 1)
     status = models.SmallIntegerField(choices=TYPE_STATUS, blank=True, null=True, default = 1)
     courier = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True, related_name='courier')

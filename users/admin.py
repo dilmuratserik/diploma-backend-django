@@ -9,11 +9,11 @@ class UserAdmin(BaseUserAdmin):
     form = UserAdminChangeForm
     # add_form = UserAdminCreationForm
 
-    list_display = ('id','phone',)
+    list_display = ('phone','id', 'role')
     list_filter = ('role',)
     fieldsets = (
         (None, {"fields": ('phone', 'password'),}),
-        ("Personal info", {"fields": ('role', 'name', 'email','avatar', 
+        ("Personal info", {"fields": ('company', 'role', 'name', 'email','avatar', 
                         'birth_date', 'country', 'city','location', 'last_online')}),
         ("tp", {"fields": ('type_price', 'storage', 'order_sector', 'show_plan', 'show_plan_date')}),
         ("Юр info", {"fields": ('bin_iin', 'credit', 'debt', 'paymets', 'galleon', 'agent')}),
@@ -33,4 +33,5 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(PhoneOTP)
+admin.site.register(Company)
 
