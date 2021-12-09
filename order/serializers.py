@@ -1,8 +1,8 @@
-from django.db.models import fields
 from rest_framework import serializers
 from .models import *
 from users.serializers import contgentSer
 from product.serializers import productSer2
+from locations.serializers import AddressSer, StorageSer
 
 
 class productser(serializers.Serializer):
@@ -20,6 +20,8 @@ class OrderProductSer(serializers.ModelSerializer):
 class OrderSer(serializers.ModelSerializer):
     product_order = OrderProductSer(many=True)
     counterparty = contgentSer()
+    delivery_address = AddressSer()
+    pickup_address = StorageSer()
     # sum = serializers.IntegerField()
     class Meta:
         model = Order

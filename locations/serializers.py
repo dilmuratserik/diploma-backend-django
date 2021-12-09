@@ -30,3 +30,8 @@ class AddressSer(serializers.ModelSerializer):
 
 class IdSer(serializers.Serializer):
     id = serializers.IntegerField()
+
+
+class StorageSer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
