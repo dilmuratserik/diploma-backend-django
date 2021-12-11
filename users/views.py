@@ -234,7 +234,23 @@ class TPUserView(viewsets.ModelViewSet):
         if s.is_valid():
             if User.objects.filter(phone=s.validated_data['phone']).exists():
                 return Response({'status': 'already exists'}, status=status.HTTP_400_BAD_REQUEST)
-            user = User.objects.create(**s.validated_data)
+            user = User.objects.create(
+                avatar = s.validated_data.get('avatar'),
+                name = s.validated_data.get('name'),
+                type_price = s.validated_data.get('type_price'),
+                storage = s.validated_data.get('storage'),
+                order_sector = s.validated_data.get('order_sector'),
+                phone = s.validated_data.get('phone'),
+                role = s.validated_data.get('role'),
+                show_plan = s.validated_data.get('show_plan'),
+                agent = s.validated_data.get('agent'),
+                working_hour_with = s.validated_data.get('working_hour_with'),
+                working_hour_until = s.validated_data.get('working_hour_until')
+            )
+            ava = s.validated_data.get('avatar', None)
+            if ava:
+                ava = compress_image(ava, (400, 400))
+                user.avatar = ava
             user.set_password(s.validated_data['password'])
             user.save()
             ser = TPUserSerializer(user)

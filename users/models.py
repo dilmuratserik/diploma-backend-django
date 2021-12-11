@@ -124,6 +124,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     show_plan = models.IntegerField(default=24, blank=True)
     show_plan_date = models.DateTimeField(auto_now=True)
+    working_hour_with = models.CharField(max_length=50, null=True, blank=True)
+    working_hour_until = models.CharField(max_length=50, null=True, blank=True)
 
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
 
