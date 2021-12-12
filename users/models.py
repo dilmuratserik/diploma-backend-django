@@ -14,8 +14,21 @@ from django.core.validators import RegexValidator
 # from PIL import Image
 # from django.core.files.uploadedfile import InMemoryUploadedFile
 
+TYPE_PRICE_RETAIL = 1
+TYPE_PRICE_WHOSALE = 2
+TPE_PRICE_SPEC = 3
+TYPE_PRICES = (
+    (TYPE_PRICE_RETAIL, 'Розничный'),
+    (TYPE_PRICE_WHOSALE, 'Оптовый'),
+    (TPE_PRICE_SPEC, 'Спец.цена')
+)
 class Company(models.Model):
     name = models.CharField(max_length=150)
+    bin = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(max_length=255, unique=True, blank=True, null=True)
+    phone = models.CharField(max_length=12, blank=True, null=True)
+    type_price = models.ForeignKey('settings.Type_Price', blank=True, null=True, on_delete=models.PROTECT)
+    fio = models.CharField(max_length=250, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -62,15 +75,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         (ROLE_TP, 'Торговый представитель'),
         (ROLE_COURIER, 'Курьер')
     )
-
-    TYPE_PRICE_RETAIL = 1
-    TYPE_PRICE_WHOSALE = 2
-    TPE_PRICE_SPEC = 3
-    TYPE_PRICES = (
-        (TYPE_PRICE_RETAIL, 'Розничный'),
-        (TYPE_PRICE_WHOSALE, 'Оптовый'),
-        (TPE_PRICE_SPEC, 'Спец.цена')
-    )
     
     ORDER_SECTOR_BEER = 1
     ORDER_SECTOR_SHOP = 2
@@ -101,6 +105,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     # -------------------------------------------------------
     role = models.SmallIntegerField(choices=ROLE_CHOICES, blank=True, null=True)
     type_price = models.SmallIntegerField(choices=TYPE_PRICES, blank=True, null=True)
+    price_type = models.ForeignKey('settings.Type_Price', blank=True, null=True, on_delete=models.PROTECT)
+    sector_order = models.ForeignKey('settings.Order_Sector', blank=True, null=True, on_delete=models.PROTECT)
     storage = models.ForeignKey("locations.Storage_region", on_delete=models.CASCADE, blank=True, null=True)
     order_sector = models.SmallIntegerField(choices=ORDER_SECTORS, blank=True, null=True)
     #--------------------------------------------------------

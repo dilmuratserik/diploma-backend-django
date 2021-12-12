@@ -32,6 +32,8 @@ class IdSer(serializers.Serializer):
     id = serializers.IntegerField()
 
 
-class StorageSer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField()
+
+class StorageSer(serializers.ModelSerializer):
+    class Meta:
+        model = Storage_region
+        fields = "__all__"

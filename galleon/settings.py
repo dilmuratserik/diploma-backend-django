@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'locations',
     'product',
     'order',
+    'settings',
 
     'rest_framework',
     'rest_framework.authtoken',

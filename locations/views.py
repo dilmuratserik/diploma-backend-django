@@ -81,12 +81,11 @@ class CountryApi(APIView):
         queryset2 = City.objects.values('id', 'name', 'country').all()
         return Response({'country': queryset, 'city': queryset2})
 
-class StorageRegion(APIView):
-    permission_classes = [permissions.IsAuthenticated,]
-
-    def get(self, request):
-        queryset = Storage_region.objects.values('id', 'name').all()
-        return Response(queryset)
+class StorageRegionApi(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Storage_region.objects.all()
+    serializer_class = StorageSer
+    pagination_class = None
 
 
 # class CityApi(APIView):

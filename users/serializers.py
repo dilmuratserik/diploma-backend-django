@@ -1,7 +1,5 @@
 from rest_framework import serializers
 from .models import User
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from django.conf import settings
 from utils.compress import compress_image
 
 class LoginAdminSerializer(serializers.Serializer):
@@ -23,13 +21,11 @@ class CountrySer(serializers.Serializer):
     name = serializers.CharField()
     id = serializers.IntegerField()
 
-class StrogeSer(serializers.Serializer):
-    name = serializers.CharField()
 
 class UserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
     # type_price = serializers.IntegerField(read_only_fields)
-    storage = StrogeSer(read_only=True)
+    storage = CountrySer(read_only=True)
     class Meta:
         model = User
         fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city', 'type_price', 'storage', 'order_sector')
@@ -73,17 +69,20 @@ class PasswordChangeSerializer(serializers.Serializer):
     new_password = serializers.CharField(max_length=128)
 
 class TPUserSerializer(serializers.ModelSerializer):
-    storage = StrogeSer()
+    storage = CountrySer()
+    price_type = CountrySer()
+    sector_order = CountrySer()
     class Meta:
         model = User
-        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id',  'role', 'show_plan', 'working_hour_with', 'working_hour_until')
+        fields = ("avatar", "name", 'price_type','type_price', 'storage', 'sector_order', 'order_sector', 'phone', 'id',  'role', 'show_plan', 'working_hour_with', 'working_hour_until')
         read_only_fields = ('id',)
 
 class CourierUserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
+    password = serializers.CharField(required=False)
     class Meta:
         model = User
-        fields = ("avatar", "name", 'type_price', 'storage', 'order_sector', 'phone', 'id', 'role', 'password', 'show_plan', 'agent', 'working_hour_with', 'working_hour_until')
+        fields = ("avatar", "name", 'price_type', 'type_price', 'storage', 'sector_order', 'order_sector', 'phone', 'id', 'role', 'password', 'show_plan', 'agent', 'working_hour_with', 'working_hour_until')
         read_only_fields = ('id',)
 
 class contgentSer(serializers.ModelSerializer):
