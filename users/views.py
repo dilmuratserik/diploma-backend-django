@@ -269,6 +269,7 @@ class TPUserView(viewsets.ModelViewSet):
                 ava = compress_image(ava, (400, 400))
                 instance.avatar = ava
             instance.name = validated_data.get('name', instance.name)
+            instance.phone = validated_data.get('phone', instance.phone)
             instance.show_plan = validated_data.get('show_plan', instance.show_plan)
             instance.order_sector = validated_data.get('order_sector', instance.order_sector)
             instance.type_price = validated_data.get('type_price', instance.type_price)
