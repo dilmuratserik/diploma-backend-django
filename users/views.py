@@ -220,7 +220,8 @@ class TPUserView(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = User.objects.filter(role__in=(3, 4))
     serializer_class = TPUserSerializer
-    search_fields = ('name',)
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ('name', 'phone')
     filter_fields = ('type_price', 'role', 'storage')
 
     def get_queryset(self):
