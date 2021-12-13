@@ -237,8 +237,10 @@ class TPUserView(viewsets.ModelViewSet):
             user = User.objects.create(
                 avatar = s.validated_data.get('avatar'),
                 name = s.validated_data.get('name'),
+                price_type = s.validated_data.get('price_type'),
                 type_price = s.validated_data.get('type_price'),
                 storage = s.validated_data.get('storage'),
+                sector_order = s.validated_data.get('sector_order'),
                 order_sector = s.validated_data.get('order_sector'),
                 phone = s.validated_data.get('phone'),
                 role = s.validated_data.get('role'),
@@ -271,10 +273,14 @@ class TPUserView(viewsets.ModelViewSet):
             instance.name = validated_data.get('name', instance.name)
             instance.phone = validated_data.get('phone', instance.phone)
             instance.show_plan = validated_data.get('show_plan', instance.show_plan)
+            instance.sector_order = validated_data.get('sector_order', instance.sector_order)
+            instance.price_type = validated_data.get('price_type', instance.price_type)
             instance.order_sector = validated_data.get('order_sector', instance.order_sector)
             instance.type_price = validated_data.get('type_price', instance.type_price)
             instance.storage = validated_data.get('storage', instance.storage)
             pwd = s.validated_data.get('password', None)
+            instance.working_hour_with = s.validated_data.get('working_hour_with', instance.working_hour_with)
+            instance.working_hour_until = s.validated_data.get('working_hour_until', instance.working_hour_until)
             if pwd:
                 instance.set_password = pwd
             instance.save()
