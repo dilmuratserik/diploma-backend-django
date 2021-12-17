@@ -47,9 +47,11 @@ class ScheduleSer(serializers.ModelSerializer):
         fields = "__all__"
 
 class PointSer(serializers.Serializer):
+    id = serializers.IntegerField()
     name = serializers.CharField()
 class ScheduleGetSer(serializers.ModelSerializer):
     point = PointSer()
+    agent = PointSer()
     class Meta:
         model = Schedule
         fields = "__all__"

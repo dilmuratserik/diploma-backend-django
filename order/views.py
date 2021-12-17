@@ -94,8 +94,8 @@ class ScheduleApi(APIView):
     def post(self, request):
         s = ScheduleSer(data=request.data)
         if s.is_valid():
-            schedule = Schedule.objects.get_or_create(
-                date = s.validated_data['data'],
+            schedule = Schedule.objects.create(
+                date = s.validated_data['date'],
                 point = s.validated_data['point'],
                 agent = s.validated_data['agent']
             )
@@ -164,6 +164,12 @@ class AddCourierToOrder(APIView):
         else:
             return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class listSchedule(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleGetSer
+    filter_fields = ('agent', 'point', 'date')
 
 # class BasketApi(APIView):
 #     permission_classes = (permissions.IsAuthenticated,)

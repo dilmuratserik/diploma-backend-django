@@ -12,6 +12,8 @@ urlpatterns = [
     path('courier/order/change/', views.CourierOrderChange.as_view()),
 
     path('admin/', views.OrderAllApi.as_view({'get': 'list'})),
-    path('add/courier/', views.AddCourierToOrder.as_view())
+    path('add/courier/', views.AddCourierToOrder.as_view()),
+
+    path('schedule/list/', views.listSchedule.as_view({'get': 'list'}))
     # path('basket/', views.BasketApi.as_view())
 ]
