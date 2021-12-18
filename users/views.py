@@ -283,7 +283,7 @@ class TPUserView(viewsets.ModelViewSet):
             instance.working_hour_with = s.validated_data.get('working_hour_with', instance.working_hour_with)
             instance.working_hour_until = s.validated_data.get('working_hour_until', instance.working_hour_until)
             if pwd:
-                instance.set_password = pwd
+                instance.set_password(pwd)
             instance.save()
             return Response({'status': 'ok'})
         else:

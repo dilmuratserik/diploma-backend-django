@@ -27,4 +27,5 @@ urlpatterns = [
     path('add/agent/<id>', views.AddAgenttoPointsApi.as_view()),
     path('admin/point/list/', views.adminAllPointAPI.as_view({'get': 'list'}))
 ]
+
 urlpatterns += router.urls
