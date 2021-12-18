@@ -26,11 +26,13 @@ class UserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
     # type_price = serializers.IntegerField(read_only_fields)
     storage = CountrySer(read_only=True)
+    price_type = CountrySer(read_only=True)
+    sector_order = CountrySer(read_only=True)
     class Meta:
         model = User
-        fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city', 'type_price', 'storage', 'order_sector')
+        fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city', 'price_type', 'storage', 'sector_order')
         # required_fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
-        read_only_fields = ('type_price', 'storage', 'order_sector')
+        read_only_fields = ('price_type', 'storage', 'sector_order')
 
     def update(self, instance, validated_data):
         ava = validated_data.get('avatar', None)
