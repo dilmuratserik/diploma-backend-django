@@ -102,6 +102,11 @@ class PointSer(serializers.ModelSerializer):
         fields = ("id", "phone", "name", "bin_iin", "credit", "paymets", "debt", "order_sector", 'agent', 'storage', 'city')
         read_only_fields = ("id",)
 
+class CreatePointSer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("phone", "name", "bin_iin", "sector_order")
+
 
 class AddAgenttoPointSer(serializers.Serializer):
     agent = serializers.IntegerField()

@@ -307,7 +307,7 @@ class GetPointDetailApi(APIView):
         return Response(s.data)
 
     def post(self, request):
-        s = PointSer(data=request.data)
+        s = CreatePointSer(data=request.data)
         if s.is_valid():
             if User.objects.filter(phone = s.validated_data['phone']).exists():
                 return Response({'status': 'already exists'}, status=status.HTTP_400_BAD_REQUEST)
@@ -315,7 +315,7 @@ class GetPointDetailApi(APIView):
                 phone = s.validated_data['phone'],
                 name = s.validated_data['name'],
                 bin_iin = s.validated_data['bin_iin'],
-                order_sector = s.validated_data['order_sector'],
+                sector_order = s.validated_data['sector_order'],
                 role = 2,
                 agent = request.user
             )
