@@ -105,7 +105,7 @@ class PointSer(serializers.ModelSerializer):
 class CreatePointSer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("phone", "name", "bin_iin", "sector_order", 'storage', 'city', 'agent')
+        fields = ("phone", "name", "bin_iin", "sector_order", 'storage', 'city')
 
 
 class AddAgenttoPointSer(serializers.Serializer):

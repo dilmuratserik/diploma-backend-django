@@ -317,7 +317,6 @@ class GetPointDetailApi(APIView):
                 bin_iin = s.validated_data['bin_iin'],
                 sector_order = s.validated_data['sector_order'],
                 city = s.validated_data['city'],
-                agent = s.validated_data['agent'],
                 storage = s.validated_data['storage'],
                 role = 2,
                 agent = request.user
