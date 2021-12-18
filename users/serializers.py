@@ -30,9 +30,9 @@ class UserSerializer(serializers.ModelSerializer):
     sector_order = CountrySer(read_only=True)
     class Meta:
         model = User
-        fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city', 'price_type', 'storage', 'sector_order')
+        fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'locations', 'country', 'city', 'price_type', 'storage', 'sector_order', 'working_hour_until', 'working_hour_with')
         # required_fields = ("avatar", "name", 'location', 'bin_iin', 'role', 'phone', 'country', 'city')
-        read_only_fields = ('price_type', 'storage', 'sector_order')
+        read_only_fields = ('working_hour_until', 'storage', 'working_hour_with')
 
     def update(self, instance, validated_data):
         ava = validated_data.get('avatar', None)
