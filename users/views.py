@@ -338,8 +338,9 @@ class GetPointOfTP(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, id):
-        queryset = User.objects.values('id', 'name').filter(agent__id=id, role=2)
-        return Response(queryset)
+        queryset = User.objects.filter(agent__id=id, role=2)
+        s = PointSer(queryset, many = True)
+        return Response(s.data)
 
 
 class AddAgenttoPointsApi(APIView):
