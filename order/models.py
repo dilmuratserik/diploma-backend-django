@@ -50,17 +50,6 @@ class Order(models.Model):
     def __str__(self):
         return f'{self.id}'
 
-    def save(self, *args, **kwargs):
-        s = self.product_order.all()
-        summ = 0
-        if len(s) >= 1:
-            for i in s:
-                if i.count:
-                    summ += i.product.price * i.count
-                else:
-                    summ += i.product.price
-        self.total = summ
-        super(Order, self).save(*args, **kwargs)
 
 
 # class Basket(models.Model):

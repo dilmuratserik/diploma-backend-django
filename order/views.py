@@ -56,6 +56,7 @@ class CreateOrderApi(APIView):
                 pickup_address = paddress
             )
             products = vd['products']
+            total_price = 0
             for i in products:
                 p = Product.objects.get(id=i['id'])
                 OrderProduct.objects.create(
@@ -63,6 +64,7 @@ class CreateOrderApi(APIView):
                     count = i['count'],
                     order = order
                 )
+                total_price += p.price * i['count']
                 p.count_order += 1
                 p.save()
             bonus = s.validated_data.get('bonus', None)
@@ -70,6 +72,8 @@ class CreateOrderApi(APIView):
                 user.bonus = 0
             user.bonus = order.total * 0.1
             user.save()
+            order.total = total_price
+            order.save()
             return Response({'status': "ok"})
         else:
             return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
